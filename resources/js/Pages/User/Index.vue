@@ -14,15 +14,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
-                    <button @click="openModal"
-                        class="bg-purple-100 text-purple-700 shadow font-bold py-3 px-5 text-sm mt-6 inline-flex items-center group rounded-md">
-                        ASSIGN A USER
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4 ml-1 group-hover:translate-x-2 delay-100 duration-200 ease-in-out"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
                 </div>
             </div>
             <div class="flex flex-col mt-3 w-full p-3 lg:p-0 lg:flex-row">

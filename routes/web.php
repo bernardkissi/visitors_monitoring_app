@@ -38,7 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/visitors', [VisitorController::class, 'index'])->name('visitors');
     Route::get('/visitor/create', [VisitorController::class, 'create'])->name('visitor.create');
     Route::post('/visitor/store', [VisitorController::class, 'store'])->name('visitor.store');
-
+    Route::put('/visitor/{visitor:id}/assign', [VisitorController::class, 'assignVisitor'])
+    ->name('visitor.assign.user');
     Route::get('/visitor/edit', [VisitorController::class, 'edit'])->name('visitor.edit');
     Route::get('/visitor/show', [VisitorController::class, 'show'])->name('visitor.show');
 
@@ -46,8 +47,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
     Route::get('/user/edit/{user:id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::get('/user/edit/{user:id}/update', [UserController::class, 'edit'])->name('user.update');
-
+    Route::put('/user/edit/{user:id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::post('/user/{user:id}/syncRole', [UserController::class, 'syncRole'])->name('user.sync.role');
+    Route::get('/visitor/edit', [VisitorController::class, 'edit'])->name('visitor.edit');
     Route::get('/user/delete', [UserController::class, 'delete'])->name('user.delete');
 
 

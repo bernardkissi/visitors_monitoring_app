@@ -136,7 +136,7 @@
                             </td>
                             <td class="hidden md:table-cell">
                                 <p class="text-sm text-gray-800 font-medium">{{ visitor.phone }}</p>
-                                <p class="text-xs text-gray-500 font-medium">{{ visitor.email }}</p>
+                                <p class="text-xs text-gray-400 font-medium">{{ visitor.email }}</p>
                             </td>
                             <td class="hidden lg:table-cell">
                                 <p class="text-sm text-gray-700 font-medium">{{ visitor.user.name }}</p>
@@ -164,8 +164,14 @@
                                 Follow up
                                 </Link>
                                 <Link :href="route('logout')" as="button" type="button"
-                                    class="text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
-                                Delete
+                                    class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                    </path>
+                                </svg>
+                                <!-- <span>Remove</span> -->
                                 </Link>
                             </td>
                         </tr>

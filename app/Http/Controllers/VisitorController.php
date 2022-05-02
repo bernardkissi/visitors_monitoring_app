@@ -54,6 +54,7 @@ class VisitorController extends Controller
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
-        $visitor->update(['user_id' => $validated]);
+        $visitor->update(['user_id' => $validated['user_id']]);
+        return redirect()->route('user.edit', $validated['user_id'])->with('success', 'Visitor assigned successfully.');
     }
 }

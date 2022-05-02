@@ -135,7 +135,9 @@ const submit = () => {
             emits('closeSubmit', false)
         },
         onError: (errors) => {
-
+            if (errors !== null) {
+                createToast('Form has errors', { type: 'danger', showIcon: true })
+            }
         }
     });
 

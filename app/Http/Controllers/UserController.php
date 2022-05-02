@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class UserController extends Controller
         return inertia('User/Edit', ['user' => $usr, 'roles' => $roles, 'visitors' => $visitors]);
     }
 
-    public function update(CreateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $user->update([
             'name' => $request->safe()->name,
@@ -58,11 +59,8 @@ class UserController extends Controller
             'password' => $request->safe()->password ?? $user->password,
         ]);
 
-        if ($request->safe()->role) {
-            $user->syncRole($request->safe()->role);
-        }
-
-        return redirect()->back()->with('success', 'User updated successfully');
+        return redirect()->route('user.edit', $user->id)
+            ->with('success', 'User updated successfully.');
     }
 
     public function syncRole(User $user, Request $request)
@@ -70,8 +68,10 @@ class UserController extends Controller
         $validated = $request->validate([
             'role' => 'required|exists:roles,name',
         ]);
+        $user->syncRoles([$validated['role']]);
 
-        $user->syncRole($request->role);
+        return redirect()->route('user.edit', $user->id)
+            ->with('success', 'User Role Updated successfully.');
     }
 
     public function delete(User $user)

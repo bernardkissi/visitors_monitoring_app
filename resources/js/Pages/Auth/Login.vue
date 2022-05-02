@@ -60,7 +60,15 @@ const submit = () => {
         onSuccess: () => {
             form.clearErrors()
             form.reset('password')
+            if (props.flash.success !== null) {
+                createToast(props.flash.success, { type: 'success', showIcon: true })
+            }
         },
+        onError: (errors) => {
+            if (errors !== null) {
+                createToast('Form has errors', { type: 'danger', showIcon: true })
+            }
+        }
     });
 }
 
