@@ -1,11 +1,11 @@
 <template>
     <Navbar />
-    <div class="container mx-auto max-w-5xl mt-8 mb-12">
+    <div class="container mx-auto max-w-5xl mt-6 h-screen">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-4xl mt-6 font-medium">Activity Logs</h3>
             <div class="flex items-center space-x-4">
                 <button @click="openModal"
-                    class="bg-blue-500 text-white font-bold py-3 px-5 text-sm mt-6 inline-flex items-center group rounded-md">
+                    class="bg-purple-100 text-purple-700 font-bold py-3 px-5 text-sm mt-6 inline-flex items-center group rounded-md">
                     Export logs
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="h-4 w-4 ml-1 group-hover:translate-x-2 delay-100 duration-200 ease-in-out" fill="none"
@@ -17,11 +17,11 @@
         </div>
         <div class="flex flex-col mt-5 w-full p-3 lg:p-0 lg:flex-row">
             <div class="relative block w-full shadow-lg h-32 mb-3 bg-white rounded-lg -z-10">
-                <div class="p-5">
+                <div class="px-6 py-5">
                     <div class="flex flex-wrap justify-between">
                         <span class="text-gray-700 font-semibold text-sm">
                             TOTAL LOGS<br>
-                            <span class="text-3xl font-semibold text-gray-700">1220 </span><br>
+                            <span class="text-3xl font-semibold text-gray-700">{{ logs.data.length }} </span><br>
                             <span class="text-sm font-normal text-gray-400">Last updated 3 hours ago</span>
                         </span>
                         <span>
@@ -37,7 +37,7 @@
         </div>
         <div class="mt-12" style="overflow-x:auto;">
             <div class="flex items-center justify-end">
-                <div class="relative w-72">
+                <div class="relative w-72 shadow rounded-lg">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                         <svg class="h-5 w-5 fill-current text-gray-500" viewBox="0 0 24 24">
                             <path
@@ -46,7 +46,7 @@
                     </span>
                     <input
                         class="block pl-8 pr-4 py-3 w-full bg-white rounded-lg text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
-                        placeholder="Search for visitors" />
+                        placeholder="Search logs" />
                 </div>
             </div>
             <table class="w-full mt-2 rounded-lg shadow-md">
@@ -56,7 +56,7 @@
                         <th class="px-2 py-4">
                             <span
                                 class="bg-white border-2 ml-2 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus-within:border-blue-500">
-                                <input type="checkbox" class="opacity-0 absolute">
+                                <input type="checkbox" class="opacity-0 absolute shadow">
                                 <svg class="fill-current hidden w-4 h-4 text-blue-500 pointer-events-none"
                                     viewBox="0 0 20 20">
                                     <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
@@ -67,11 +67,11 @@
                         <th class="hidden md:table-cell  text-sm text-gray-700">Performed On</th>
                         <th class="hidden md:table-cell  text-sm text-gray-700">Performed By</th>
                         <th class="hidden md:table-cell text-sm text-gray-700">Performed At</th>
-                        <th class="text-sm text-gray-700">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    <tr class="accordion border-b border-gray-100 hover:bg-gray-50">
+                    <tr v-for="log in props.logs.data" :key="log.id"
+                        class="accordion border-b border-gray-100 hover:bg-gray-50">
                         <td class="px-3 py-5">
                             <span
                                 class="bg-white border-2 ml-1 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus-within:border-blue-500">
@@ -85,50 +85,54 @@
                         <td class="flex items-center">
                             <span>
                                 <img class="hidden mr-1 md:mr-2 md:inline-block h-8 w-8 rounded-full object-cover"
-                                    src="https://ui-avatars.com/api/?background=random&name=Bernard Owiredu" alt="" />
+                                    :src="image + log.log_name" />
                             </span>
                             <span class="py-3 w-40">
-                                <p class="text-gray-800 text-sm">Bernard Owiredu</p>
+                                <p class="text-gray-800 text-sm">{{ log.log_name }}</p>
                                 <p class="md:hidden text-xs text-gray-600 font-medium">0244224317</p>
-                                <p class="hidden md:table-cell text-xs text-gray-400 font-medium">Anyinamu</p>
+                                <p class="hidden md:table-cell text-xs text-gray-400 font-medium">{{ log.event }}</p>
                             </span>
                         </td>
                         <td class="hidden md:table-cell">
-                            <p class="text-sm text-gray-800 font-medium">0244224317</p>
-                            <p class="text-xs text-gray-500 font-medium">bernardkissi18@gmail.com</p>
+                            <p class="text-sm text-gray-800 font-medium">{{ log.event }}</p>
+                            <p class="text-xs text-gray-500 font-medium">{{ log.description }}</p>
                         </td>
                         <td class="hidden lg:table-cell">
-                            <p class="text-sm text-gray-700 font-medium">Nelly Sarpong</p>
+                            <p class="text-sm text-gray-700 font-medium">{{ log.causer.name }}</p>
                         </td>
                         <td>
-                            <span class="bg-green-50 text-green-600 text-xs font-bold rounded-lg px-4 py-1">monitoring
+                            <span class="text-xs font-bold rounded-lg px-4 py-1">{{ dayjs(log.created_at).fromNow() }}
                             </span>
-                        </td>
-                        <td class="flex space-x-3">
-                            <Link :href="route('user.edit')" as="button" type="button"
-                                class="text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">Edit
-                            </Link>
-                            <Link :href="route('user.delete')" as="button" type="button"
-                                class="text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
-                            Delete
-                            </Link>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="flex items-center justify-between bg-white rounded-b-lg p-3">
-            <span class="text-sm text-gray-500">updated 2m ago</span>
-            <span class="text-sm text-gray-600">
-                1 2 3
-            </span>
+        <div class="flex items-center justify-end bg-white rounded-b-lg p-3">
+            <Pagination :links="logs.links" />
         </div>
     </div>
 
 </template>
 
 <script setup>
+
 import Navbar from '@/Components/Navbar.vue'
+import Pagination from '@/Components/Pagination.vue'
+import { ref } from 'vue'
+
+const dayjs = require('dayjs')
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
+
+const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
+
+const props = defineProps({
+    logs: {
+        type: Object,
+        required: true
+    }
+})
 </script>
 
 <style>

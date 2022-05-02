@@ -1,7 +1,7 @@
 <template>
     <div>
         <Navbar />
-        <div class="container mx-auto max-w-5xl mt-6 mb-12">
+        <div class="container mx-auto max-w-5xl mt-6 mb-12 h-screen">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-4xl mt-6 font-medium">Visitors</h3>
                 <Link :href="route('visitor.create')"
@@ -109,8 +109,8 @@
                             <th class="text-sm text-gray-700">Action</th>
                         </tr>
                     </thead>
-                    <tbody v-if="props.visitors !== null" class="bg-white">
-                        <tr v-for="visitor in visitors" :key="visitor.id"
+                    <tbody v-if="props.visitors.data !== null" class="bg-white">
+                        <tr v-for="visitor in props.visitors.data" :key="visitor.id"
                             class="accordion border-b border-gray-100 hover:bg-gray-50">
                             <td class="px-3 py-5">
                                 <span
@@ -163,6 +163,17 @@
                                     class="text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
                                 Follow up
                                 </Link>
+                                <Link :href="route('visitor.edit', visitor.id)" as="button" type="button"
+                                    class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                    </path>
+                                </svg>
+                                </Link>
                                 <Link :href="route('logout')" as="button" type="button"
                                     class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -171,7 +182,7 @@
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                                     </path>
                                 </svg>
-                                <!-- <span>Remove</span> -->
+                                <!-- <span><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></span> -->
                                 </Link>
                             </td>
                         </tr>
@@ -188,11 +199,8 @@
                 </svg>
                 <h3 class="text-xl font-semibold text-gray-400">No Visitors Recorded</h3>
             </div>
-            <div v-else class="flex items-center justify-between bg-white rounded-b-lg p-3">
-                <span class="text-sm text-gray-500">updated 2m ago</span>
-                <span class="text-sm text-gray-600">
-                    1 2 3
-                </span>
+            <div v-else class="flex items-center justify-end bg-white rounded-b-lg p-3">
+                <Pagination :links="visitors.links" />
             </div>
         </div>
     </div>
@@ -200,6 +208,7 @@
 
 <script setup>
 import Navbar from '@/Components/Navbar.vue'
+import Pagination from '@/Components/Pagination.vue'
 import { computed, onMounted, ref } from 'vue'
 import { createToast } from 'mosha-vue-toastify'
 import 'mosha-vue-toastify/dist/style.css'
@@ -207,7 +216,10 @@ import 'mosha-vue-toastify/dist/style.css'
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
 const props = defineProps({
     flash: Object,
-    visitors: { Object, default: () => null },
+    visitors: {
+        Object,
+        default: () => null
+    },
     total_visitors: {
         type: Number,
         default: 0

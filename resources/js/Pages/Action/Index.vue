@@ -1,7 +1,7 @@
 <template>
     <div>
         <Navbar />
-        <div class="container mx-auto max-w-5xl">
+        <div class="container mx-auto max-w-5xl h-screen">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-4xl mt-6 font-medium">Follow ups</h3>
                 <div class="flex items-center justify-end mt-8 space-x-3 text-md">
@@ -38,7 +38,7 @@
                             <span class="">Add Actions</span>
                         </button>
                     </div>
-                    <div v-if="actions.length <= 0"
+                    <div v-if="actions.data.length <= 0"
                         class="flex items-center justify-center p-4 h-48 bg-white rounded-b-md">
                         <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
                         <h1 class="text-2xl text-gray-400 font-semibold">No activites for this user</h1>
                     </div>
                     <div v-else class="flex flex-col">
-                        <div v-for="action in actions" :key="action.id"
+                        <div v-for="action in actions.data" :key="action.id"
                             class="flex items-center py-4 px-6 text-gray-600 border-b border-gray-200">
                             <div class=" flex items-center w-4/5 text-sm text-gray-600">
                                 <div class="flex flex-col">
@@ -63,6 +63,10 @@
                             <div class="w-1/4 text-sm ml-20">{{ dayjs(action.created_at).fromNow() }}</div>
                         </div>
                     </div>
+                    <div v-if="actions.data.length >= 1"
+                        class="flex items-center justify-end bg-white rounded-b-lg p-3">
+                        <Pagination :links="actions.links" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,6 +78,7 @@
 <script setup>
 import Navbar from '@/Components/Navbar.vue'
 import ActionModal from '@/Components/ActionsModal'
+import Pagination from '@/Components/Pagination.vue'
 import { ref, onMounted, onUpdated, watch, computed } from 'vue'
 import { createToast } from 'mosha-vue-toastify'
 import 'mosha-vue-toastify/dist/style.css'
@@ -92,7 +97,7 @@ const props = defineProps({
         default: null
     },
     actions: {
-        type: Array,
+        type: Object,
         default: null
     }
 })

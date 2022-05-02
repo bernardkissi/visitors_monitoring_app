@@ -170,7 +170,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="text-sm text-gray-700">Recent Visitors</th>
+                                    <th class="text-sm text-gray-700">Visitors</th>
                                     <th class="hidden md:table-cell  text-sm text-gray-700">Mobile</th>
                                     <th class="text-sm text-gray-700">Status</th>
                                     <th class="text-sm text-gray-700">Action</th>

@@ -14,9 +14,9 @@ class VisitorController extends Controller
         $visitors = Visitor::query()
             ->with('user')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(7);
 
-        $total_visitors = $visitors->count();
+        $total_visitors =  Visitor::query()->count();
 
         return inertia('Visitor/Index', [
             'visitors' => $visitors,

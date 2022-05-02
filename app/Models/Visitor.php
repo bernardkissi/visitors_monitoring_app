@@ -34,7 +34,7 @@ class Visitor extends Model
     {
         return LogOptions::defaults()
         ->logUnguarded()
-        ->useLogName('Action activity')
+        ->useLogName('Visitor activity')
         ->logOnlyDirty()
         ->setDescriptionForEvent(fn (string $eventName) => "Visitor :properties.attributes.fullname has been {$eventName}");
     }

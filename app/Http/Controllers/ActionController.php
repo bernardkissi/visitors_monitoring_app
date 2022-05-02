@@ -13,9 +13,10 @@ class ActionController extends Controller
 {
     public function index(Visitor $visitor)
     {
+        $actions = $visitor->actions()->with('user')->latest()->paginate(7);
         return inertia('Action/Index', [
             'visitor' => $visitor,
-            'actions' => $visitor->actions->load('user') ?? null,
+            'actions' => $actions,
         ]);
     }
 

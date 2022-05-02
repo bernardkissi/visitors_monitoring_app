@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/visitor/store', [VisitorController::class, 'store'])->name('visitor.store');
     Route::put('/visitor/{visitor:id}/assign', [VisitorController::class, 'assignVisitor'])
     ->name('visitor.assign.user');
-    Route::get('/visitor/edit', [VisitorController::class, 'edit'])->name('visitor.edit');
+    Route::get('/visitor/edit/{visitor:id}', [VisitorController::class, 'edit'])->name('visitor.edit');
     Route::get('/visitor/show', [VisitorController::class, 'show'])->name('visitor.show');
 
     Route::get('/users', [UserController::class, 'index'])->name('users');
@@ -49,7 +49,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/edit/{user:id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/edit/{user:id}/update', [UserController::class, 'update'])->name('user.update');
     Route::post('/user/{user:id}/syncRole', [UserController::class, 'syncRole'])->name('user.sync.role');
-    Route::get('/visitor/edit', [VisitorController::class, 'edit'])->name('visitor.edit');
     Route::get('/user/delete', [UserController::class, 'delete'])->name('user.delete');
 
 

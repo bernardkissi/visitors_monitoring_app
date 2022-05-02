@@ -4,13 +4,19 @@
             <div class="flex items-centter justify-between">
                 <div class=" flex items-center space-x-1">
                     <img src="/images/gracefields.png" alt="logo" class="w-24">
-                    <span class="text-sm text-white font-medium leading-4">v1.0</span>
+                    <!-- <span class="text-sm text-white font-medium leading-4">v1.0</span> -->
                 </div>
+
                 <div class="flex items-center gap-4 text-white font-medium">
-                    <Link :href="route('login')" class="hover:text-blue-600 cursor-pointer px-3 py-1 rounded">Home
+                    <Link :href="route('login')" class="hover:text-blue-600 cursor-pointer px-3 py-1 rounded">Developer
                     </Link>
-                    <Link :href="route('login')" class="hover:text-purple-800 cursor-pointer">Visitors Monitoring System
+                    <Link :href="route('login')" class="hover:text-blue-600 cursor-pointer px-3 py-1 rounded">Account
                     </Link>
+                    <Link :href="route('user.edit', $page.props.auth.user.id)"
+                        class="hover:text-purple-800 cursor-pointer">
+                    {{ $page.props.auth.user.fullname }}
+                    </Link>
+
                     <Dropdown />
                 </div>
             </div>
@@ -86,4 +92,12 @@
 
 <script setup>
 import Dropdown from '@/Components/Dropdown.vue'
+
+const props = defineProps({
+    auth: {
+        type: Object,
+        default: null
+    }
+})
+
 </script>

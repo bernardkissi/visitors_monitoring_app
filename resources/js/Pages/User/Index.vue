@@ -1,7 +1,7 @@
 <template>
     <div>
         <Navbar />
-        <div class="container mx-auto max-w-5xl mt-6 mb-12">
+        <div class="container mx-auto max-w-5xl mt-6 h-screen">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-4xl mt-6 font-medium">Users</h3>
                 <div class="flex items-center space-x-4">
@@ -108,8 +108,8 @@
                             <th class="text-sm text-gray-700">Action</th>
                         </tr>
                     </thead>
-                    <tbody v-if="props.users !== null" class="bg-white">
-                        <tr v-for="user in users" :key="user.id"
+                    <tbody v-if="props.users.data !== null" class="bg-white">
+                        <tr v-for="user in props.users.data" :key="user.id"
                             class="accordion border-b border-gray-100 hover:bg-gray-50">
                             <td class="px-3 py-5">
                                 <span
@@ -174,7 +174,7 @@
                     </tbody>
                 </table>
             </div>
-            <div v-if="props.users.length <= 0"
+            <div v-if="props.users.data.length <= 0"
                 class="flex items-center justify-center bg-white h-32 rounded-b-lg p-3 space-x-3 ">
                 <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -184,11 +184,8 @@
                 </svg>
                 <h3 class="text-xl font-semibold text-gray-400">No Users Recorded</h3>
             </div>
-            <div v-else class="flex items-center justify-between bg-white rounded-b-lg p-3">
-                <span class="text-sm text-gray-500">updated 2m ago</span>
-                <span class="text-sm text-gray-600">
-                    1 2 3
-                </span>
+            <div v-else class="flex items-center justify-end bg-white rounded-b-lg p-3">
+                <Pagination :links="users.links" />
             </div>
         </div>
 
@@ -201,6 +198,7 @@
 import Navbar from '@/Components/Navbar'
 import Modal from '@/Components/UserModal'
 import Options from '@/Components/Options.vue'
+import Pagination from '@/Components/Pagination.vue'
 import { createToast } from 'mosha-vue-toastify'
 import 'mosha-vue-toastify/dist/style.css'
 import { ref, watch, computed } from 'vue'
@@ -211,7 +209,7 @@ dayjs.extend(relativeTime)
 
 const props = defineProps({
     flash: Object,
-    users: Array,
+    users: Object,
     total_users: Number,
     total_assigned: Number
 })

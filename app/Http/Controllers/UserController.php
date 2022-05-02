@@ -14,8 +14,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::query()->with('visitors')->latest()->get();
-        $total_users = $users->count();
+        $users = User::query()->with('visitors')->latest()->paginate(7);
+        $total_users = User::query()->count();
         $total_assigned = User::query()->whereHas('visitors')->count();
         return inertia('User/Index', [
             'users' => $users,
