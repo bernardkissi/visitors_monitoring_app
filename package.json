@@ -1,0 +1,39 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.4",
+        "axios": "^0.25",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "postcss": "^8.4.12",
+        "tailwindcss": "^3.0.23",
+        "vue-loader": "^17.0.0"
+    },
+    "dependencies": {
+        "@headlessui/vue": "^1.5.0",
+        "@heroicons/vue": "^1.0.6",
+        "@inertiajs/inertia": "^0.11.0",
+        "@inertiajs/inertia-vue3": "^0.6.0",
+        "@inertiajs/progress": "^0.2.7",
+        "@inertiajs/server": "^0.1.0",
+        "@vue/server-renderer": "^3.2.31",
+        "apexcharts": "^3.35.0",
+        "dayjs": "^1.11.1",
+        "epic-spinners": "^1.1.0",
+        "mosha-vue-toastify": "^1.0.23",
+        "prettier": "^2.6.2",
+        "tw-elements": "^1.0.0-alpha12",
+        "vue": "^3.2.31",
+        "vue3-apexcharts": "^1.4.1",
+        "webpack-node-externals": "^3.0.0"
+    }
+}
