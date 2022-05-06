@@ -15,7 +15,8 @@
                         <div class="flex flex-wrap justify-between">
                             <span class="text-gray-700 font-semibold text-sm">
                                 TOTAL VISITORS<br>
-                                <span class="text-3xl font-semibold text-gray-700">1220 </span><br>
+                                <span class="text-3xl font-semibold text-gray-700"> {{ analytics.visitors_count }}
+                                </span><br>
                                 <span class="text-sm font-normal text-gray-500">Last accepted today</span>
                             </span>
                             <span>
@@ -32,8 +33,9 @@
                     <div class="p-5">
                         <div class="flex flex-wrap justify-between">
                             <div class="text-gray-700 font-semibold text-sm">
-                                TOTAL CONVERTED<br>
-                                <span class="text-3xl font-semibold text-gray-700">350 </span><br>
+                                TOTAL USER ASSIGNED<br>
+                                <span class="text-3xl font-semibold text-gray-700">{{ analytics.total_assigned_users
+                                }}</span><br>
                                 <span class="text-sm font-normal text-gray-500">Last accepted today</span>
                             </div>
                             <div>
@@ -51,8 +53,10 @@
                     <div class="p-5">
                         <div class="flex flex-wrap justify-between">
                             <span class="text-gray-700 font-semibold text-sm">
-                                TOTAL ACTIVITES <br>
-                                <span class="text-3xl font-semibold text-gray-700">750 </span><br>
+                                TOTAL FOLLOW UP ACTIVITES <br>
+                                <span class="text-3xl font-semibold text-gray-700">{{ analytics.total_follow_up_actions
+                                }}
+                                </span><br>
                                 <span class="text-sm font-normal text-gray-500">Last accepted today</span>
                             </span>
                             <span>

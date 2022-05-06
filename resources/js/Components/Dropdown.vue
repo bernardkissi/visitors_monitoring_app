@@ -17,8 +17,8 @@
             <MenuItems
                 class="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div class="px-1 py-1">
-                    <MenuItem v-slot="{ active }" :as="Link" :href="route('users')">
-                    <Link :href="route('user.edit', $page.auth.user.id)" :class="[
+                    <MenuItem v-slot="{ active }" :as="Link" :href="route('user.edit', $page.props.auth.user.id)">
+                    <Link :href="route('user.edit', $page.props.auth.user.id)" :class="[
                         active ? 'bg-purple-50 text-purple-800' : 'text-gray-900',
                         'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                     ]">
