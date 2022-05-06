@@ -30,8 +30,8 @@ const obj = reactive({
             offsetY: 0,
             floating: false,
             style: {
-                fontSize: '16px',
-                fontWeight: 'medium',
+                fontSize: '18px',
+                fontWeight: 'bold',
                 fontFamily: '"Inter", sans-serif',
                 color: '#263238'
             },
@@ -92,7 +92,6 @@ onBeforeMount(() => {
 const populateChart = () => {
     let mapData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     data.values.map(x => mapData[x.month - 1] = x.total)
-    console.log(mapData)
     obj.series = [{ data: mapData, name: 'visitors' }]
 }
 </script>

@@ -6,32 +6,32 @@ trait VisitorAnalytics
 {
     public function scopeMembership($query)
     {
-        return $query->selectRaw('count(id) as total, membership')
-            ->groupBy('membership');
+        return $query->selectRaw('count(id) as total,  membership as response,  MONTH(created_at) as month, YEAR(created_at) as year')
+            ->groupBy('membership', 'month', 'year');
     }
 
     public function scopeVisited($query)
     {
-        return $query->selectRaw('count(id) as total, get_here_option')
-            ->groupBy('get_here_option');
+        return $query->selectRaw('count(id) as total, get_here_option as response, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->groupBy('get_here_option', 'month', 'year');
     }
 
     public function scopeHelp($query)
     {
-        return $query->selectRaw('count(id) as total, help_information')
-            ->groupBy('help_information');
+        return $query->selectRaw('count(id) as total, help_information as response, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->groupBy('help_information', 'month', 'year');
     }
 
     public function scopeAge($query)
     {
-        return $query->selectRaw('count(id) as total, age_range')
-            ->groupBy('age_range');
+        return $query->selectRaw('count(id) as total, age_range as response, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->groupBy('age_range', 'month', 'year');
     }
 
     public function scopeService($query)
     {
-        return $query->selectRaw('count(id) as total, service_attendance')
-            ->groupBy('service_attendance');
+        return $query->selectRaw('count(id) as total, service_attendance as response, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->groupBy('service_attendance', 'month', 'year');
     }
 
     public function scopeTotal($query)

@@ -9,8 +9,10 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
+        $visitor = Visitor::query();
+        $visitors_count =  $visitor->count();
         $total_visitors = Visitor::total()->get();
-        $visitors = Visitor::query()->with('user')->take(20)->latest()->paginate(5);
+        $visitors =  $visitor->with('user')->take(20)->latest()->paginate(5);
         $membership = Visitor::membership()->get();
         $visited = Visitor::visited()->get();
         $help = Visitor::help()->get();
@@ -19,6 +21,7 @@ class DashboardController extends Controller
 
         return inertia('Dashboard/Index', ['analytics' =>
             [
+                'visitors_count' => $visitors_count,
                 'visitors' => $visitors,
                 'membership' => $membership,
                 'visited' => $visited,

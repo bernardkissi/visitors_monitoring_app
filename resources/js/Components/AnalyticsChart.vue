@@ -5,10 +5,15 @@
 <script setup>
 import VueApexCharts from "vue3-apexcharts";
 import { reactive, onBeforeMount } from 'vue'
+
 const props = defineProps({
     series: {
         type: Array,
         default: []
+    },
+    title: {
+        type: String,
+        default: null
     },
 })
 const obj = reactive({
@@ -23,15 +28,15 @@ const obj = reactive({
             fontFamily: '"Inter", sans-serif',
         },
         title: {
-            text: 'Visitors per month for service',
+            text: props.title,
             align: 'center',
             margin: 10,
             offsetX: 0,
             offsetY: 0,
             floating: false,
             style: {
-                fontSize: '16px',
-                fontWeight: 'medium',
+                fontSize: '18px',
+                fontWeight: 'bold',
                 fontFamily: '"Inter", sans-serif',
                 color: '#263238'
             },
@@ -46,7 +51,7 @@ const obj = reactive({
                 endingShape: 'rounded'
             },
         },
-        colors: ['#c084fc', '#EDF2F7'],
+        colors: ['#c084fc', '#f87171', '#cbd5e1'],
         dataLabels: {
             enabled: false
         },
@@ -71,7 +76,7 @@ const obj = reactive({
             horizontalAlign: 'center',
             offsetX: 0,
             offsetY: 10,
-            fontSize: '13px',
+            fontSize: '14px',
             fontFamily: '"Inter", sans-serif',
             labels: {
                 colors: '#4A5568',
@@ -90,10 +95,30 @@ onBeforeMount(() => {
     populateChart()
 })
 
+
+const groupData = (objectArray, property) => {
+    return objectArray.reduce((acc, obj) => {
+        const key = obj[property];
+        if (!acc[key]) {
+            acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+    }, {});
+}
+
 const populateChart = () => {
     let mapData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    data.values.map(x => mapData[x.month - 1] = x.total)
-    console.log(mapData)
-    obj.series = [{ data: mapData, name: 'visitors' }]
+    const finalData = []
+    const groupedData = Object.entries(groupData(data.values, 'response'))
+    const results = groupedData.map((values, i) => {
+        values[1].map(x => mapData[x.month - 1] = x.total)
+        finalData.push({ name: values[0], data: mapData })
+        mapData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    })
+
+    obj.series = [...finalData]
 }
 </script>
+
+

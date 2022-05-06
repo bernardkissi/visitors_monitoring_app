@@ -1,10 +1,6 @@
 <template>
     <div class="h-screen">
         <Navbar />
-        {{ analytics.membership }}
-        <!-- {{ analytics.total_visitors }}
-        {{ analytics.membership }}
-        {{ obj.series }} -->
         <div class="container mx-auto max-w-5xl mt-12">
             <div class="flex items-center justify-between mb-4">
                 <span class="font-medium text-base">Last 30 days</span>
@@ -77,10 +73,15 @@
                     <span class="text-gray-700 font-medium text-xl">Visitors Analytics <span
                             class="md:hidden text-gray-500 font-normal text-sm px-1"> 3 seconds ago</span></span>
                     <div class="hidden md:flex">
-                        <button
-                            class="mr-3 shadow block text-gray-600 hover:text-gray-800 bg-white px-3 py-1 rounded border-0 border-gray-700 text-sm">
-                            Today
-                        </button>
+                        <select v-model="active"
+                            class="outline-none focus:outline-none w-48 mr-3 shadow block text-gray-600 hover:text-gray-800 bg-white px-3 py-1 rounded border-0 border-gray-700 text-sm">
+                            <option value="membership">Membership Analytics</option>
+                            <option value="visitors">Visitors Analytics</option>
+                            <option value="age">Age Analytics</option>
+                            <option value="visited">Channel Analytics</option>
+                            <option value="help">Assitance Analytics</option>
+                            <option value="service">Service Analytics</option>
+                        </select>
                         <button
                             class="block border-b text-gray-600 hover:text-gray-800 bg-white px-3 py-1 border-1 rounded shadow text-sm">20-09-19
                             - 30-09-19</button>
@@ -100,7 +101,16 @@
                         </button>
                     </div>
                     <div class="border-b lg:border-r lg:w-3/4 pt-3 lg:pr-0 pr-2 lg:p-3">
-                        <BarChart :series="analytics.total_visitors" />
+                        <BarChart v-if="active === 'visitors'" :series="analytics.total_visitors" />
+                        <AnalyticsChart v-if="active === 'age'" :series="analytics.age" title="Age Range of Visitors" />
+                        <AnalyticsChart v-if="active === 'service'" :series="analytics.service"
+                            title="Service Attendance of Visitors" />
+                        <AnalyticsChart v-if="active === 'visited'" :series="analytics.visited"
+                            title="Visitation Medium of Visitors" />
+                        <AnalyticsChart v-if="active === 'help'" :series="analytics.help"
+                            title="Assistance need by Visitors" />
+                        <AnalyticsChart v-if="active === 'membership'" :series="analytics.membership"
+                            title="Membership State of Visitors" />
                     </div>
                     <div class="lg:w-1/4 flex flex-row lg:flex-col ">
                         <button class="flex p-2 border-r lg:border-b hover:bg-gray-100">
@@ -313,8 +323,9 @@
 <script setup>
 import Navbar from '@/Components/Navbar.vue'
 import BarChart from '@/Components/BarChart.vue'
+import AnalyticsChart from '@/Components/AnalyticsChart.vue'
 import Pagination from '@/Components/Pagination.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 
@@ -322,10 +333,13 @@ const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
+const active = ref('visitors')
 const props = defineProps({
     analytics: {
         type: Object,
         default: () => null,
     },
 })
+
+
 </script>
