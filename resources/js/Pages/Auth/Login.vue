@@ -1,12 +1,12 @@
 <template>
     <div class="mt-24">
-        <div class="container mx-auto max-w-5xl text-center">
+        <div class="container mx-auto w-full lg:max-w-5xl text-center">
             <div class="flex items-center justify-center gap-3">
                 <img src="/images/gracefields.png" alt="logo" class="w-48">
             </div>
             <h3 class="text-xl text-gray-600 pt-2"> Visitors Montioring System</h3>
         </div>
-        <div class="container mx-auto w-1/3 mt-8">
+        <div class="container mx-auto w-full px-6 lg:px-0 lg:w-1/3 mt-8">
             <form @submit.prevent="submit">
                 <div class="flex flex-col bg-white py-6 px-5 text-gray-600 gap-5 shadow-xl rounded-md">
                     <input type="email" name="username" placeholder="Enter your member ID" v-model="form.email"

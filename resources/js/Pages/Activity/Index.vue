@@ -21,7 +21,7 @@
                     <div class="flex flex-wrap justify-between">
                         <span class="text-gray-700 font-semibold text-sm">
                             TOTAL LOGS<br>
-                            <span class="text-3xl font-semibold text-gray-700">{{ logs.data.length }} </span><br>
+                            <span class="text-3xl font-semibold text-gray-700">{{ total_logs }} </span><br>
                             <span class="text-sm font-normal text-gray-400">Last updated 3 hours ago</span>
                         </span>
                         <span>
@@ -130,6 +130,10 @@ const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bo
 const props = defineProps({
     logs: {
         type: Object,
+        required: true
+    },
+    total_logs: {
+        type: Number,
         required: true
     }
 })

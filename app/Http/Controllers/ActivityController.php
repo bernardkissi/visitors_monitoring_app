@@ -10,6 +10,8 @@ class ActivityController extends Controller
     public function index()
     {
         $activities = Activity::query()->with(['subject', 'causer'])->latest()->paginate(5);
-        return inertia('Activity/Index', ['logs' => $activities]);
+        $total_activities =Activity::query()->count();
+
+        return inertia('Activity/Index', ['logs' => $activities, 'total_logs' => $total_activities]);
     }
 }

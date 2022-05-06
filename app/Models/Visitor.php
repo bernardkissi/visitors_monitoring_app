@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\States\VisitorState;
+use App\Models\Traits\VisitorAnalytics;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -11,7 +12,7 @@ use Spatie\ModelStates\HasStates;
 
 class Visitor extends Model
 {
-    use HasFactory, HasStates, LogsActivity;
+    use HasFactory, HasStates, LogsActivity, VisitorAnalytics;
 
     protected $guarded = [];
 
@@ -29,6 +30,7 @@ class Visitor extends Model
     {
         return $this->hasMany(Action::class);
     }
+
 
     public function getActivitylogOptions(): LogOptions
     {

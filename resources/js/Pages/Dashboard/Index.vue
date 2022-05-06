@@ -1,6 +1,10 @@
 <template>
     <div class="h-screen">
         <Navbar />
+        {{ analytics.membership }}
+        <!-- {{ analytics.total_visitors }}
+        {{ analytics.membership }}
+        {{ obj.series }} -->
         <div class="container mx-auto max-w-5xl mt-12">
             <div class="flex items-center justify-between mb-4">
                 <span class="font-medium text-base">Last 30 days</span>
@@ -96,7 +100,7 @@
                         </button>
                     </div>
                     <div class="border-b lg:border-r lg:w-3/4 pt-3 lg:pr-0 pr-2 lg:p-3">
-                        <VueApexCharts type="bar" :options="obj.chartOptions" :series="obj.chartOptions.series" />
+                        <BarChart :series="analytics.total_visitors" />
                     </div>
                     <div class="lg:w-1/4 flex flex-row lg:flex-col ">
                         <button class="flex p-2 border-r lg:border-b hover:bg-gray-100">
@@ -171,9 +175,22 @@
                     </div>
                 </div>
             </section>
-            <!-- vistors table -->
-            <div style="overflow-x:auto;">
-                <table class="w-full mt-12 rounded-lg shadow-md">
+
+            <div class="mt-12" style="overflow-x:auto;">
+                <div class="flex items-center justify-end">
+                    <div class="hidden lg:block relative w-64">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                            <svg class="h-5 w-5 fill-current text-gray-500" viewBox="0 0 24 24">
+                                <path
+                                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z" />
+                            </svg>
+                        </span>
+                        <input
+                            class="block shadow pl-8 pr-4 py-3 w-full bg-white rounded-lg text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
+                            placeholder="Search for visitors" />
+                    </div>
+                </div>
+                <table class="w-full mt-2 rounded-lg shadow-md">
                     <thead class="rounded-t-lg">
                         <tr class="text-left rounded-t-lg bg-gray-50 border-b border-grey uppercase">
                             <th class="px-2 py-4">
@@ -193,8 +210,9 @@
                             <th class="text-sm text-gray-700">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white">
-                        <tr class="accordion border-b border-gray-100 hover:bg-gray-50">
+                    <tbody v-if="analytics.visitors.data !== null" class="bg-white">
+                        <tr v-for="visitor in analytics.visitors.data" :key="visitor.id"
+                            class="accordion border-b border-gray-100 hover:bg-gray-50">
                             <td class="px-3 py-5">
                                 <span
                                     class="bg-white border-2 ml-1 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus-within:border-blue-500">
@@ -208,251 +226,106 @@
                             <td class="flex items-center">
                                 <span>
                                     <img class="hidden mr-1 md:mr-2 md:inline-block h-8 w-8 rounded-full object-cover"
-                                        src="https://ui-avatars.com/api/?background=random&name=Bernard Owiredu"
-                                        alt="" />
+                                        :src="image + visitor.fullname" alt="" />
                                 </span>
                                 <span class="py-3 w-40">
-                                    <p class="text-gray-800 text-sm">Bernard Owiredu</p>
-                                    <p class="md:hidden text-xs text-gray-600 font-medium">0244224317</p>
-                                    <p class="hidden md:table-cell text-xs text-gray-400 font-medium">Anyinamu</p>
+                                    <p class="text-gray-800 text-sm">{{ visitor.fullname }}</p>
+                                    <p class="md:hidden text-xs text-gray-600 font-medium">{{ visitor.phone }}</p>
+                                    <p class="hidden md:table-cell text-xs text-gray-400 font-medium">{{ visitor.address
+                                    }}</p>
                                 </span>
                             </td>
                             <td class="hidden md:table-cell">
-                                <p class="text-sm text-gray-800 font-medium">0244224317</p>
-                                <p class="text-xs text-gray-500 font-medium">bernardkissi18@gmail.com</p>
+                                <p class="text-sm text-gray-800 font-medium">{{ visitor.phone }}</p>
+                                <p class="text-xs text-gray-400 font-medium">{{ dayjs(visitor.created_at).fromNow() }}
+                                </p>
                             </td>
                             <td class="hidden lg:table-cell">
-                                <p class="text-sm text-gray-700 font-medium">Nelly Sarpong</p>
+                                <p class="text-sm text-gray-700 font-medium">{{ visitor.user.name }}</p>
                             </td>
                             <td>
-                                <span
-                                    class="bg-green-50 text-green-600 text-xs font-bold rounded-lg px-4 py-1">monitoring
+                                <span v-if="visitor.state === 'pending'"
+                                    class="bg-rose-50 text-rose-600 text-xs font-bold rounded px-4 py-1">{{
+                                            visitor.state
+                                    }}
+                                </span>
+                                <span v-if="visitor.state === 'called'"
+                                    class="bg-yellow-100 text-yellow-600 text-xs font-bold rounded px-4 py-1">{{
+                                            visitor.state
+                                    }}
+                                </span>
+                                <span v-if="visitor.state === 'visited'"
+                                    class="bg-green-100 text-green-600 text-xs font-bold rounded px-4 py-1">{{
+                                            visitor.state
+                                    }}
                                 </span>
                             </td>
-                            <td>
-                                <svg class="mr-3 md:mr-1 h-12 w-6 fill-current text-gray-500"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        d="M4 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" />
+                            <td class="flex space-x-3">
+                                <Link :href="route('actions.visitor', visitor.id)" as="button" type="button"
+                                    class="text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                Follow up
+                                </Link>
+                                <Link :href="route('visitor.edit', visitor.id)" as="button" type="button"
+                                    class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                    </path>
                                 </svg>
-                            </td>
-                        </tr>
-                        <tr class="accordion border-b border-grey-light items-center">
-                            <td class="px-3 py-5">
-                                <span
-                                    class="bg-white border-2 ml-1 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus:border-blue-500">
-                                    <input type="checkbox" class="opacity-0 absolute">
-                                    <svg class="fill-current hidden w-4 h-4 text-green-500 pointer-events-none"
-                                        viewBox="0 0 20 20">
-                                        <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-                                    </svg>
-                                </span>
-                            </td>
-                            <td class="flex items-center">
-                                <span>
-                                    <img class="hidden mr-1 md:mr-2 md:inline-block h-8 w-8 rounded-full object-cover"
-                                        src="https://ui-avatars.com/api/?background=random&name=Molly Sanders" alt="" />
-                                </span>
-                                <span class="py-3">
-                                    <p class="text-gray-800 text-sm">Molly Sanders</p>
-                                    <p class="md:hidden text-xs text-gray-700 font-medium">244224317</p>
-                                    <p class="hidden md:table-cell text-xs text-gray-400 font-medium">Stadium</p>
-                                </span>
-                            </td>
-                            <td class="hidden md:table-cell">
-                                <p class="text-sm text-gray-800 font-medium">0242822669</p>
-                                <p class="text-xs text-gray-400 font-medium">bernardkissi18@gmail.com</p>
-                            </td>
-                            <td class="hidden lg:table-cell">
-                                <p class="text-sm text-gray-700 font-medium">Bernard Afrane</p>
-                            </td>
-                            <td>
-                                <span class="bg-yellow-50 text-yellow-600 text-xs font-bold rounded-lg px-4 py-1">paused
-                                </span>
-                            </td>
-                            <td>
-                                <svg class="h-12 w-6 fill-current text-gray-600" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path
-                                        d="M4 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" />
+                                </Link>
+                                <Link :href="route('logout')" as="button" type="button"
+                                    class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                    </path>
                                 </svg>
-                            </td>
-                        </tr>
-                        <tr class="accordion border-b border-grey-light items-center">
-                            <td class="px-3 py-5">
-                                <span
-                                    class="bg-white border-2 ml-1 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus:border-blue-500">
-                                    <input type="checkbox" class="opacity-0 absolute">
-                                    <svg class="fill-current hidden w-4 h-4 text-green-500 pointer-events-none"
-                                        viewBox="0 0 20 20">
-                                        <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-                                    </svg>
-                                </span>
-                            </td>
-                            <td class="flex items-center">
-                                <span>
-                                    <img class="hidden mr-1 md:mr-2 md:inline-block h-8 w-8 rounded-full object-cover"
-                                        src="https://ui-avatars.com/api/?background=random&name=Gify Osei" alt="" />
-                                </span>
-                                <span class="py-3">
-                                    <p class="text-gray-800 text-sm">Gify Osei</p>
-                                    <p class="md:hidden text-xs text-gray-600 font-medium">244224317</p>
-                                    <p class="hidden md:table-cell text-xs text-gray-500 font-medium">Asokwa</p>
-                                </span>
-                            </td>
-                            <td class="hidden md:table-cell">
-                                <p class="text-sm text-gray-800 font-medium">0243243810</p>
-                                <p class="text-xs text-gray-500 font-medium">bernardkissi18@gmail.com</p>
-                            </td>
-                            <td class="hidden lg:table-cell">
-                                <p class="text-sm text-gray-700 font-medium">Gify Gyamfi</p>
-                            </td>
-                            <td>
-                                <span class="bg-red-50 text-red-600 text-xs font-bold rounded-lg px-4 py-1">Stopped
-                                </span>
-                            </td>
-                            <td>
-                                <svg class="h-12 w-6 fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path
-                                        d="M4 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" />
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr class="accordion border-b border-grey-light items-center">
-                            <td class="px-3 py-5">
-                                <span
-                                    class="bg-white border-2 ml-1 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus:border-blue-500">
-                                    <input type="checkbox" class="opacity-0 absolute">
-                                    <svg class="fill-current hidden w-4 h-4 text-green-500 pointer-events-none"
-                                        viewBox="0 0 20 20">
-                                        <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-                                    </svg>
-                                </span>
-                            </td>
-                            <td class="flex items-center">
-                                <span>
-                                    <img class="hidden mr-1 md:mr-2 md:inline-block h-8 w-8 rounded-full object-cover"
-                                        src="https://ui-avatars.com/api/?background=random&name=Ransford Aboagy"
-                                        alt="" />
-                                </span>
-                                <span class="py-3">
-                                    <p class="text-gray-800 text-sm">Ransford Aboagye</p>
-                                    <p class="md:hidden text-xs text-gray-600 font-medium">244224317</p>
-                                    <p class="hidden md:table-cell text-xs text-gray-400 font-medium">Santasi</p>
-                                </span>
-                            </td>
-                            <td class="hidden md:table-cell">
-                                <p class="text-sm text-gray-800 font-medium">0245065767</p>
-                                <p class="text-xs text-gray-400 font-medium">bernardkissi18@gmail.com</p>
-                            </td>
-                            <td class="hidden lg:table-cell">
-                                <p class="text-sm text-gray-700 font-medium">Fred Boateng</p>
-                            </td>
-                            <td>
-                                <span
-                                    class="bg-green-50 text-green-600 text-xs font-bold rounded-lg px-4 py-1">monitoring
-                                </span>
-                            </td>
-                            <td>
-                                <svg class="h-12 w-6 fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path
-                                        d="M4 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" />
-                                </svg>
+                                <!-- <span><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></span> -->
+                                </Link>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="flex items-center justify-between bg-white rounded-b-lg p-3">
-                <span class="text-sm text-gray-500">updated 2m ago</span>
-                <span class="text-sm text-gray-600">
-                    1 2 3
-                </span>
+            <div v-if="analytics.visitors.data.length === 0"
+                class="flex items-center justify-center bg-white h-32 rounded-b-lg p-3 space-x-3 ">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                </svg>
+                <h3 class="text-xl font-semibold text-gray-400">No Visitors Recorded</h3>
             </div>
-            <br><br>
+            <div v-else class="flex items-center justify-end bg-white rounded-b-lg p-3">
+                <Pagination :links="analytics.visitors.links" />
+            </div>
             <!-- end table -->
+            <br><br>
         </div>
     </div>
 </template>
 
 <script setup>
 import Navbar from '@/Components/Navbar.vue'
-import VueApexCharts from "vue3-apexcharts";
-import { reactive } from 'vue'
+import BarChart from '@/Components/BarChart.vue'
+import Pagination from '@/Components/Pagination.vue'
+import { ref } from 'vue'
+const dayjs = require('dayjs')
+const relativeTime = require('dayjs/plugin/relativeTime')
 
-const obj = reactive({
-    chartOptions: {
-        chart: {
-            animations: {
-                enabled: false,
-            },
-            height: 50,
-            type: 'bar',
-            stacked: true,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
-        },
-        title: {
-            text: 'Visitors per month for service',
-            align: 'center',
-            margin: 10,
-            offsetX: 0,
-            offsetY: 0,
-            floating: false,
-            style: {
-                fontSize: '14px',
-                fontWeight: 'medium',
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-                color: '#263238'
-            },
-        },
-        plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: false,
-                    position: 'top'
-                },
-                columnWidth: '50%',
-                endingShape: 'rounded'
-            },
-        },
-        colors: ['#63B3ED', '#EDF2F7'],
-        dataLabels: {
-            enabled: false
-        },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            crosshairs: {
-                fill: {
-                    type: 'gradient',
-                    gradient: {
-                        colorFrom: '#D8E3F0',
-                        colorTo: '#BED1E6',
-                        stops: [0, 100],
-                        opacityFrom: 0.4,
-                        opacityTo: 0.5,
-                    }
-                }
-            },
-        },
-        legend: {
-            floating: false,
-            position: 'top',
-            horizontalAlign: 'center',
-            offsetX: 0,
-            offsetY: 10,
-            fontSize: '13px',
-            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-            labels: {
-                colors: '#4A5568',
-            }
-        },
-        series: [{
-            name: 'series-1',
-            data: [30, 12, 25, 50, 49, 21, 70, 51, 22, 34, 45, 20]
-        }]
-    }
+
+dayjs.extend(relativeTime)
+
+const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
+const props = defineProps({
+    analytics: {
+        type: Object,
+        default: () => null,
+    },
 })
-
 </script>

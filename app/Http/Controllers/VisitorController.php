@@ -39,14 +39,9 @@ class VisitorController extends Controller
         return redirect()->route('visitors')->with('success', 'Visitor created successfully.');
     }
 
-    public function edit(Request $request)
+    public function edit(Visitor $visitor)
     {
-        return inertia('Visitor/Edit', []);
-    }
-
-    public function show(Request $request)
-    {
-        return inertia('Visitor/Show', []);
+        return inertia('Visitor/Edit', ['visitor' => $visitor->load('user')]);
     }
 
     public function assignVisitor(Visitor $visitor, Request $request)
