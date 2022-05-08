@@ -10,13 +10,10 @@
                 <div class="flex items-center gap-4 text-white font-medium">
                     <Link :href="route('login')" class="hover:text-blue-600 cursor-pointer px-3 py-1 rounded">Developer
                     </Link>
-                    <Link :href="route('login')" class="hover:text-blue-600 cursor-pointer px-3 py-1 rounded">Account
+                    <Link href="#"
+                        class="text-sm bg-black opacity-50 p-1 rounded-md hover:text-purple-800 cursor-pointer">
+                    Active Year: {{ $page.props.year }}
                     </Link>
-                    <Link :href="route('user.edit', $page.props.auth.user.id)"
-                        class="hover:text-purple-800 cursor-pointer">
-                    {{ $page.props.auth.user.fullname }}
-                    </Link>
-
                     <Dropdown />
                 </div>
             </div>
@@ -92,12 +89,20 @@
 
 <script setup>
 import Dropdown from '@/Components/Dropdown.vue'
-
+import { computed, watch } from 'vue'
 const props = defineProps({
     auth: {
         type: Object,
         default: null
-    }
+    },
+    year: String
 })
 
+const currentYear = computed(() => props.year)
+
+// watch(currentYear, (newyear, prevyear) => {
+//     if (newyear !== prevyear) {
+//         Inertia.get('/dashboard', { year: newyear }, { replace: true })
+//     }
+// })
 </script>

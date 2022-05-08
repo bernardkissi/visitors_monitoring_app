@@ -51,6 +51,7 @@ class HandleInertiaRequests extends Middleware
                 'failed' => $request->session()->get('failed'),
                 'message' => $request->session()->get('message')
             ],
+            'year' => fn () => session('year') ?? now()->year,
         ]);
     }
 }

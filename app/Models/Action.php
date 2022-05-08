@@ -2,18 +2,22 @@
 
 namespace App\Models;
 
+use App\Models\Traits\YearScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Action extends Model
 {
-    use HasFactory, LogsActivity;
-
+    use HasFactory, LogsActivity, QueryCacheable, YearScope;
 
     protected $guarded = [];
 
+    public $cacheFor = 5600;
+
+    protected static $flushCacheOnUpdate = true;
 
     public function visitor()
     {

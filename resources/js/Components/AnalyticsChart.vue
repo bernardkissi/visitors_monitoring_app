@@ -20,7 +20,7 @@ const obj = reactive({
     chartOptions: {
         chart: {
             animations: {
-                enabled: false,
+                enabled: true,
             },
             height: 50,
             type: 'bar',

@@ -3,11 +3,28 @@
         <Navbar />
         <div class="container mx-auto max-w-5xl mt-12">
             <div class="flex items-center justify-between mb-4">
-                <span class="font-medium text-base">Last 30 days</span>
-                <button
-                    class="block border-b text-gray-600 hover:text-gray-800 bg-white px-3 py-1 border-1 rounded shadow text-sm">20-09-19
-                    - 30-09-19
-                </button>
+                <span class="font-medium text-base"></span>
+                <div class="hidden md:flex items-center space-x-4">
+                    <svg class="h-5 w-5 -mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    <span class="text-gray-600 font-medium">{{ current_month_name }} - Year: </span>
+                    <select v-model="year"
+                        class="outline-none focus:outline-none w-24 mr-3 shadow block text-gray-600 hover:text-gray-800 bg-white px-3 py-1 rounded border-0 border-gray-700 text-sm">
+                        <option value="2022" selected>2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                </div>
             </div>
             <div class="flex flex-col mt-3 w-full p-3 lg:p-0 lg:flex-row">
                 <div class="relative block w-full shadow-lg h-32 mb-3 bg-white mr-8 rounded-lg">
@@ -76,7 +93,13 @@
                 <div class="hidden md:flex md:-mt-2 lg:mt-3 xl:mt-3 justify-between mt-3">
                     <span class="text-gray-700 font-medium text-xl">Visitors Analytics <span
                             class="md:hidden text-gray-500 font-normal text-sm px-1"> 3 seconds ago</span></span>
-                    <div class="hidden md:flex">
+                    <div class="hidden md:flex items-center space-x-3">
+                        <svg class="w-5 h-5 -mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <span class="text-gray-600 font-medium">Filter data: </span>
                         <select v-model="active"
                             class="outline-none focus:outline-none w-48 mr-3 shadow block text-gray-600 hover:text-gray-800 bg-white px-3 py-1 rounded border-0 border-gray-700 text-sm">
                             <option value="membership">Membership Analytics</option>
@@ -86,9 +109,9 @@
                             <option value="help">Assitance Analytics</option>
                             <option value="service">Service Analytics</option>
                         </select>
-                        <button
+                        <!-- <button
                             class="block border-b text-gray-600 hover:text-gray-800 bg-white px-3 py-1 border-1 rounded shadow text-sm">20-09-19
-                            - 30-09-19</button>
+                            - 30-09-19</button> -->
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row shadow rounded-lg mt-3 bg-white">
@@ -117,25 +140,24 @@
                             title="Membership State of Visitors" />
                     </div>
                     <div class="lg:w-1/4 flex flex-row lg:flex-col ">
-                        <button class="flex p-2 border-r lg:border-b hover:bg-gray-100">
+                        <button class="flex bg-green-50 p-2 border-r lg:border-b hover:bg-gray-100">
                             <div class="m-3">
                                 <div class="flex flex-col items-start">
                                     <h4
                                         class="hidden lg:inline-flex text-xs uppercase text-gray-400 font-semibold text-left">
                                         Total Visitors this Month
                                     </h4>
-                                    <div class="flex items-baseline">
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                                            </path>
+                                        </svg>
                                         <h1 class="flex items-center justify-between">
-                                            <span class="mr-2 text-2xl lg:text-3xl font-medium text-gray-700">725</span>
+                                            <span class="mr-2 text-2xl lg:text-2xl font-medium text-gray-700">
+                                                {{ this_month[0] ? this_month[0].total : 0 }}</span>
                                         </h1>
-                                        <div class="flex text-baseline text-xs font-bold text-green-600">
-                                            <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                                            </svg>
-                                            <span>12%</span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -147,18 +169,18 @@
                                         class="hidden lg:inline-flex text-xs uppercase text-gray-400 font-semibold text-left">
                                         Total Visitors Last Month
                                     </h4>
-                                    <div class="flex items-baseline">
-                                        <h1 class="flex items-center justify-between">
-                                            <span class="mr-2 text-2xl lg:text-3xl font-medium text-gray-700">413</span>
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                                            </path>
+                                        </svg>
+                                        <h1 class="flex">
+                                            <span class="mr-2 text-2xl lg:text-2xl font-medium text-gray-700">
+                                                {{ last_month[0] ? last_month[0].total : 0 }}
+                                            </span>
                                         </h1>
-                                        <div class="flex text-baseline text-xs font-bold text-red-600">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3"></path>
-                                            </svg>
-                                            <span>9%</span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -168,20 +190,43 @@
                                 <div class="flex flex-col items-start">
                                     <h4
                                         class="hidden lg:inline-flex text-xs uppercase text-gray-400 font-semibold text-left">
-                                        Total Visitors over 6 months
+                                        Total Visitors Last Week
                                     </h4>
-                                    <div class="flex items-baseline">
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                                            </path>
+                                        </svg>
                                         <h1 class="flex items-center justify-between">
-                                            <span class="mr-2 text-2xl lg:text-3xl font-medium text-gray-700">200</span>
+                                            <span class="mr-2 text-2xl lg:text-2xl font-medium text-gray-700">
+                                                {{ last_week[0] ? last_week[0].total : 0 }}
+                                            </span>
                                         </h1>
-                                        <div class="flex text-baseline text-xs font-bold text-red-600">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3"></path>
-                                            </svg>
-                                            <span>9%</span>
-                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                        <button class="flex p-2 border-r lg:border-b hover:bg-gray-100">
+                            <div class="m-3">
+                                <div class="flex flex-col items-start">
+                                    <h4
+                                        class="hidden lg:inline-flex text-xs uppercase text-gray-400 font-semibold text-left">
+                                        Total Visitors this year
+                                    </h4>
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                                            </path>
+                                        </svg>
+                                        <h1 class="flex items-center justify-between">
+                                            <span class="mr-2 text-2xl lg:text-2xl font-medium text-gray-700">{{
+                                                    analytics.total_visitors_for_the_year
+                                            }}</span>
+                                        </h1>
                                     </div>
                                 </div>
                             </div>
@@ -329,12 +374,18 @@ import Navbar from '@/Components/Navbar.vue'
 import BarChart from '@/Components/BarChart.vue'
 import AnalyticsChart from '@/Components/AnalyticsChart.vue'
 import Pagination from '@/Components/Pagination.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 
+const weekOfYear = require('dayjs/plugin/weekOfYear')
+
 
 dayjs.extend(relativeTime)
+dayjs.extend(weekOfYear)
+
+const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
 const active = ref('visitors')
@@ -344,6 +395,24 @@ const props = defineProps({
         default: () => null,
     },
 })
+const year = ref(props.analytics.query ? props.analytics.query : '2022')
 
+const current_month = new Date().getMonth() + 1;
+const current_month_name = computed(() => month[current_month - 1]);
+const this_month = computed(() => props.analytics.total_visitors.filter((visitor) => visitor.month === current_month))
+const last_month = computed(() => props.analytics.total_visitors.filter((visitor) => visitor.month === current_month - 1))
+const last_three_month = computed(() => props.analytics.total_visitors.filter((visitor) => visitor.month === current_month - 3))
+const last_week = computed(() => props.analytics.total_visitors_last_week.filter((visitor) => visitor.week === dayjs().subtract(1, 'week').week() - 1))
+
+watch(year, (newyear, prevyear) => {
+    if (newyear !== prevyear) {
+        Inertia.get('/dashboard', { year: newyear }, { replace: true })
+    }
+})
+
+const percentage_difference = (a, b) => {
+    value = 100 * Math.abs((a - b) / ((a + b) / 2));
+    return value.toFixed(2);
+}
 
 </script>

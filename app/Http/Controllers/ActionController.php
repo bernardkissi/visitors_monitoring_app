@@ -13,7 +13,7 @@ class ActionController extends Controller
 {
     public function index(Visitor $visitor)
     {
-        $actions = $visitor->actions()->with('user')->latest()->paginate(7);
+        $actions = $visitor->actions()->filter(session('year'))->with('user')->latest()->paginate(7);
         return inertia('Action/Index', [
             'visitor' => $visitor,
             'actions' => $actions,

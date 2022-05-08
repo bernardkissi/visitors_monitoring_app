@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateVisitorRequest;
+use App\Jobs\SendVisitorAssignMessageJob;
+use App\Jobs\SendVisitorMessageJob;
 use App\Models\User;
 use App\Models\Visitor;
+use App\Notifications\SendVisitorNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class VisitorController extends Controller
 {
     public function index()
     {
-        $visitors = Visitor::query()
+        $visitors = Visitor::query()->filter(session('year'))
             ->with('user')
             ->orderBy('created_at', 'desc')
             ->paginate(7);
 
-        $total_visitors =  Visitor::query()->count();
+        $total_visitors =  Visitor::query()->filter(session('year'))->count();
 
         return inertia('Visitor/Index', [
             'visitors' => $visitors,
@@ -35,7 +39,8 @@ class VisitorController extends Controller
 
     public function store(CreateVisitorRequest $request)
     {
-        $user = Visitor::create($request->validated());
+        $visitor = Visitor::create($request->validated());
+        SendVisitorMessageJob::dispatch($visitor)->delay(now()->addSeconds(10));
         return redirect()->route('visitors')->with('success', 'Visitor created successfully.');
     }
 
@@ -50,6 +55,7 @@ class VisitorController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
         $visitor->update(['user_id' => $validated['user_id']]);
+        SendVisitorAssignMessageJob::dispatch($visitor)->delay(now()->addSeconds(10));
         return redirect()->route('user.edit', $validated['user_id'])->with('success', 'Visitor assigned successfully.');
     }
 }
