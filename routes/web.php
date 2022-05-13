@@ -23,10 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
-
+Route::get('/', fn () => redirect()->route('login'));
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
@@ -39,9 +36,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/visitors', [VisitorController::class, 'index'])->name('visitors');
     Route::get('/visitor/edit/{visitor:id}', [VisitorController::class, 'edit'])->name('visitor.edit');
     Route::get('/visitor/show', [VisitorController::class, 'show'])->name('visitor.show');
+    Route::get('/visitor/create', [VisitorController::class, 'create'])->name('visitor.create');
     Route::get('/action/{visitor:id}', [ActionController::class, 'index'])->name('actions.visitor');
     Route::post('/action/store', [ActionController::class, 'store'])->name('actions.store');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/user/edit/{user:id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/edit/{user:id}/update', [UserController::class, 'update'])->name('user.update');
+
+
 
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/settings', [SettingController::class, 'index'])->name('settings');
@@ -49,8 +51,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users');
         Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
         Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
-        Route::get('/user/edit/{user:id}', [UserController::class, 'edit'])->name('user.edit');
-        Route::put('/user/edit/{user:id}/update', [UserController::class, 'update'])->name('user.update');
         Route::post('/user/{user:id}/syncRole', [UserController::class, 'syncRole'])->name('user.sync.role');
         Route::get('/user/delete', [UserController::class, 'delete'])->name('user.delete');
         Route::get('/logs', [ActivityController::class, 'index'])->name('logs');

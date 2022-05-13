@@ -46,10 +46,11 @@ class HandleInertiaRequests extends Middleware
                     'telephone' => Auth::user()->phone
                 ],
             ]: null,
+            'permission' => Auth::user()?->access ?? null,
             'flash' => [
-                'success' => $request->session()->get('success'),
-                'failed' => $request->session()->get('failed'),
-                'message' => $request->session()->get('message')
+                'success' => fn () => $request->session()->get('success'),
+                'failed' => fn () => $request->session()->get('failed'),
+                'message' => fn () => $request->session()->get('message')
             ],
             'year' => fn () => session('year') ?? now()->year,
         ]);

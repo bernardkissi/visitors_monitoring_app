@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Authorizations;
 use App\Models\Traits\YearScope;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -35,6 +38,8 @@ class User extends Authenticatable
         'phone',
         'password',
     ];
+
+    public $cacheFor = 3600;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -77,5 +82,14 @@ class User extends Authenticatable
         return LogOptions::defaults()
         ->useLogName('User activity')
         ->setDescriptionForEvent(fn (string $eventName) => "User has been {$eventName}");
+    }
+
+    public function getAccessAttribute()
+    {
+        $userPermissions = $this->getPermissionsViaRoles()->pluck('name');
+        $permissions = Permission::query()->select('name')->get();
+        return collect($permissions)->map(function ($permission) use ($userPermissions) {
+            return [Str::slug($permission->name, '_') => $userPermissions->contains($permission->name)];
+        })->collapse();
     }
 }

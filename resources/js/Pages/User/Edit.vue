@@ -12,7 +12,7 @@
                 </svg>
                 <span>Back</span>
                 </Link>
-            </div>
+            </div> {{ permission }}
             <div class="flex items-center justify-between -mt-2">
                 <div class="flex items-center space-x-3">
                     <h1 class="text-2xl mt-10 font-medium">{{ user.name }}</h1>
@@ -33,14 +33,14 @@
                 </button>
             </div>
             <div class="flex space-x-12 mt-6">
-                <div class="flex flex-col bg-white rounded-lg w-1/4 h-[123px]">
+                <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[permission.update_users ? 'h-[123px]': 'h-[62px]']">
                     <div @click="type = !type"
                         :class="[
                         !type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
                         <span class="font-semibold text-sm">User Information</span>
                         <span class="text-xs text-gray-500">Update users information</span>
                     </div>
-                    <div @click="type = !type"
+                    <div v-if="permission.update_users" @click="type = !type"
                         :class="[
                         type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
                         <span class="font-semibold text-sm">Assign Visitors to a User </span>
@@ -85,7 +85,7 @@
                             </div>
                         </form>
                     </div>
-                    <div v-if="!type" class="flex flex-col bg-white shadow rounded-lg mb-6 mt-2">
+                    <div v-if="permission.update_users" v-show="!type" class="flex flex-col bg-white shadow rounded-lg mb-6 mt-2">
                         <form @submit.prevent="submitRole(user.id)">
                             <div class="flex flex-col p-6 border-b">
 
@@ -267,7 +267,8 @@ const props = defineProps({
     flash: Object,
     user: Object,
     roles: Array,
-    visitors: Array
+    visitors: Array,
+    permission: Object
 })
 
 let form = useForm({
