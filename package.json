@@ -25,6 +25,7 @@
         "@inertiajs/inertia-vue3": "^0.6.0",
         "@inertiajs/progress": "^0.2.7",
         "@inertiajs/server": "^0.1.0",
+        "@pdftron/pdfjs-express-viewer": "^8.4.0",
         "@vue/server-renderer": "^3.2.31",
         "apexcharts": "^3.35.0",
         "dayjs": "^1.11.1",

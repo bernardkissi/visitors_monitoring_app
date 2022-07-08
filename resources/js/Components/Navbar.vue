@@ -2,17 +2,18 @@
     <header class="flex flex-col bg-purple-900 w-full">
         <nav class="container mx-auto max-w-5xl py-3">
             <div class="flex items-centter justify-between">
-                <div class=" flex items-center space-x-1">
+                <div class=" flex items-center space-x-2">
                     <img src="/images/gracefields.png" alt="logo" class="w-24">
-                    <!-- <span class="text-sm text-white font-medium leading-4">v1.0</span> -->
+                    <span class="text-sm text-white font-medium leading-4">Visitors Monitoring System</span>
                 </div>
 
                 <div class="flex items-center gap-4 text-white font-medium">
-                    <Link :href="route('login')" class="hover:text-blue-600 cursor-pointer px-3 py-1 rounded">Developer
-                    </Link>
+                    <span>v.1.0</span>
+                    <button @click="openModal" class="cursor-pointer px-3 py-1 rounded">Developer
+                    </button>
                     <Link href="#"
                         class="text-sm bg-black opacity-50 p-1 rounded-md hover:text-purple-800 cursor-pointer">
-                    Active Year: {{ $page.props.year }}
+                     Year: {{ $page.props.year }}
                     </Link>
                     <Dropdown />
                 </div>
@@ -33,7 +34,7 @@
                             <Link :href="route('dashboard')" class="text-gray-500 hover:text-gray-400"
                                 :class="{ 'text-purple-600 font-bold': $page.url === '/dashboard' }">Dashboard</Link>
                         </div>
-                        <div class="flex items-center cursor-pointer py-3"
+                        <div v-if="$page.props.role === 'admin'" class="flex items-center cursor-pointer py-3"
                             :class="{ ' text-purple-600': $page.url === '/users' }">
                             <svg class="w-5 h-5 mr-2 " fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +46,7 @@
                                 :class="{ 'text-purple-600 font-bold': $page.url === '/users' }">Users</Link>
                         </div>
 
-                        <div class="flex items-center cursor-pointer py-3"
+                        <div v-if="$page.props.role === 'admin'" class="flex items-center cursor-pointer py-3"
                             :class="{ 'text-purple-600': $page.url === '/visitors' }">
                             <svg class="h-5 w-5 mr-2 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -56,7 +57,7 @@
                                 :class="{ 'text-purple-600 font-bold': $page.url === '/visitors' }">Vistors</Link>
                         </div>
 
-                        <div class="flex items-center cursor-pointer py-3"
+                        <div v-if="$page.props.role === 'admin'" class="flex items-center cursor-pointer py-3"
                             :class="{ 'text-purple-600': $page.url === '/logs' }">
                             <svg class="h-5 w-5 mr-2 stroke-current" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -67,8 +68,12 @@
                                 :class="{ 'text-purple-600 font-bold': $page.url === '/logs' }">Logs</Link>
                         </div>
                     </div>
-                    <div>
-                        <div class="flex items-center cursor-pointer py-3"
+                    <div class="flex items-center space-x-3">
+                        <div class="flex items-center bg-purple-50 text-purple-900 rounded-md py-1 px-2 hover:bg-purple-200">
+                            <svg class="w-5 h-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <button @click="openReport" class="font-medium">Generate Report</button>
+                        </div>
+                        <div v-if="$page.props.role === 'admin'" class="flex items-center cursor-pointer py-3"
                             :class="{ ' text-purple-500': $page.url === '/settings' }">
                             <svg class="h-5 w-5 mr-2 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -83,26 +88,32 @@
                     </div>
                 </div>
             </div>
+             <AboutModal @close-submit="closeModal" @close-modal="closeModal" :is-open="isOpen" />
+            <ReportModal @close-submit="closeReport" @close-modal="closeReport" :is-open="isReport" />
         </div>
     </header>
 </template>
 
 <script setup>
 import Dropdown from '@/Components/Dropdown.vue'
-import { computed, watch } from 'vue'
+import AboutModal from '@/Components/AboutModal.vue'
+import ReportModal from '@/Components/ReportModal.vue'
+import {ref, computed, watch } from 'vue'
 const props = defineProps({
     auth: {
         type: Object,
         default: null
     },
-    year: String
+    year: String,
+    permission: Object,
+    role: String
 })
+const isOpen = ref(false)
+const isReport = ref(false)
+const closeModal = () => isOpen.value = false
+const openModal = () => isOpen.value = true
+const closeReport = () => isReport.value = false
+const openReport = () => isReport.value = true
 
 const currentYear = computed(() => props.year)
-
-// watch(currentYear, (newyear, prevyear) => {
-//     if (newyear !== prevyear) {
-//         Inertia.get('/dashboard', { year: newyear }, { replace: true })
-//     }
-// })
 </script>

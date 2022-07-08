@@ -12,7 +12,7 @@
                 </svg>
                 <span>Back</span>
                 </Link>
-            </div> {{ permission }}
+            </div>
             <div class="flex items-center justify-between -mt-2">
                 <div class="flex items-center space-x-3">
                     <h1 class="text-2xl mt-10 font-medium">{{ user.name }}</h1>
@@ -268,7 +268,8 @@ const props = defineProps({
     user: Object,
     roles: Array,
     visitors: Array,
-    permission: Object
+    permission: Object,
+    role:String
 })
 
 let form = useForm({

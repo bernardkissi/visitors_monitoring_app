@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InteractController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitorController;
@@ -37,12 +37,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/visitor/edit/{visitor:id}', [VisitorController::class, 'edit'])->name('visitor.edit');
     Route::get('/visitor/show', [VisitorController::class, 'show'])->name('visitor.show');
     Route::get('/visitor/create', [VisitorController::class, 'create'])->name('visitor.create');
+    Route::post('/visitor/store', [VisitorController::class, 'store'])->name('visitor.store');
     Route::get('/action/{visitor:id}', [ActionController::class, 'index'])->name('actions.visitor');
     Route::post('/action/store', [ActionController::class, 'store'])->name('actions.store');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/user/edit/{user:id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/edit/{user:id}/update', [UserController::class, 'update'])->name('user.update');
-
+    Route::get('/reports/generate', [ReportController::class, 'generate'])->name('reports');
+    Route::get('/report/view', [ReportController::class, 'index'])->name('reports.view');
 
 
     Route::middleware(['role:admin'])->group(function () {

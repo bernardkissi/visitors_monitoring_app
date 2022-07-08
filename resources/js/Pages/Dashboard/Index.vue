@@ -140,7 +140,7 @@
                             title="Membership State of Visitors" />
                     </div>
                     <div class="lg:w-1/4 flex flex-row lg:flex-col ">
-                        <button class="flex bg-green-50 p-2 border-r lg:border-b hover:bg-gray-100">
+                        <button class="flex bg-gray-50 p-2 border-r lg:border-b hover:bg-gray-100">
                             <div class="m-3">
                                 <div class="flex flex-col items-start">
                                     <h4
