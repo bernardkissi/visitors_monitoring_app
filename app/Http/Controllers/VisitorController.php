@@ -7,9 +7,7 @@ use App\Jobs\SendVisitorAssignMessageJob;
 use App\Jobs\SendVisitorMessageJob;
 use App\Models\User;
 use App\Models\Visitor;
-use App\Notifications\SendVisitorNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 
 class VisitorController extends Controller
 {
@@ -47,6 +45,12 @@ class VisitorController extends Controller
     public function edit(Visitor $visitor)
     {
         return inertia('Visitor/Edit', ['visitor' => $visitor->load('user')]);
+    }
+
+    public function delete(Visitor $visitor)
+    {
+        $visitor->delete();
+        return redirect()->route('visitors')->with('success', 'Visitor deleted successfully.');
     }
 
     public function assignVisitor(Visitor $visitor, Request $request)

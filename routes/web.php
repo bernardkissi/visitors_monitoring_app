@@ -54,8 +54,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
         Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
         Route::post('/user/{user:id}/syncRole', [UserController::class, 'syncRole'])->name('user.sync.role');
-        Route::get('/user/delete', [UserController::class, 'delete'])->name('user.delete');
+        Route::delete('/user/{user:id}/delete', [UserController::class, 'delete'])->name('user.delete');
         Route::get('/logs', [ActivityController::class, 'index'])->name('logs');
+        Route::delete('/visitor/{visitor:id}/delete', [VisitorController::class, 'delete'])->name('visitor.delete');
         Route::put('/visitor/{visitor:id}/assign', [VisitorController::class, 'assignVisitor'])
             ->name('visitor.assign.user');
     });

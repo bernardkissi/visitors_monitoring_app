@@ -27,7 +27,9 @@
                             </DialogDescription>
                             <div class="flex flex-col items-center p-2 space-y-2">
                                 <div class="flex-shrink-0">
-                                    <img class="h-20 w-20 rounded-full" src="https://pbs.twimg.com/profile_images/1453852782683992100/X-WR7FOL_400x400.jpg" alt="" />
+                                    <img class="h-20 w-20 rounded-full"
+                                        src="https://pbs.twimg.com/profile_images/1453852782683992100/X-WR7FOL_400x400.jpg"
+                                        alt="" />
                                 </div>
                                 <div class="ml-3">
                                     <div class="text-base font-medium leading-6 text-gray-900">
@@ -39,13 +41,14 @@
                                         Software Developer @GLEIF, Frankurt-Germany
                                     </div>
                                     <div class="text-sm font-medium leading-5 text-gray-500">
-                                        <b class="text-gray-800"> Mobile: </b>+233522377591
+                                        <b class="text-gray-800"> Mobile: </b>+233522377591, +4915215670994
                                     </div>
                                     <div class="text-sm font-medium leading-5 text-gray-500">
                                         <b class="text-gray-800">Email:</b> bernardkissi18@gmail.com
                                     </div>
                                     <div class="text-sm font-medium leading-5 text-gray-500">
-                                        <b class="text-gray-800">Linkedln:</b> <a href="#" class="text-blue-600">@bernardkissi</a>
+                                        <b class="text-gray-800">Linkedln:</b> <a href="#"
+                                            class="text-blue-600">@bernardkissi</a>
                                     </div>
                                 </div>
                                 <!-- <button type="button"

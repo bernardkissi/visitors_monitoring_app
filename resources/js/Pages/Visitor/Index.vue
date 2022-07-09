@@ -174,7 +174,7 @@
                                     </path>
                                 </svg>
                                 </Link>
-                                <Link :href="route('logout')" as="button" type="button"
+                                <Link href="#" as="button" type="button" preserve-scroll
                                     class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">

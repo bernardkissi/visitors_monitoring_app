@@ -63,6 +63,7 @@ class UserController extends Controller
             ->with('success', 'User updated successfully.');
     }
 
+
     public function syncRole(User $user, Request $request)
     {
         $validated = $request->validate([
@@ -77,6 +78,6 @@ class UserController extends Controller
     public function delete(User $user)
     {
         $user->delete();
-        return redirect()->route('users');
+        return redirect()->route('users')->with('success', 'User deleted successfully.');
     }
 }
