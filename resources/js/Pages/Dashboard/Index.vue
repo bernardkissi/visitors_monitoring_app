@@ -34,7 +34,7 @@
                                 TOTAL VISITORS<br>
                                 <span class="text-3xl font-semibold text-gray-700"> {{ analytics.visitors_count }}
                                 </span><br>
-                                <span class="text-sm font-normal text-gray-500">Last accepted today</span>
+                                <span class="text-sm font-normal text-gray-500">Overall Visitors</span>
                             </span>
                             <span>
                                 <svg class="mt-6 mr-2 fill-current text-gray-500" width="37" height="41"
@@ -53,7 +53,7 @@
                                 TOTAL USER ASSIGNED<br>
                                 <span class="text-3xl font-semibold text-gray-700">{{ analytics.total_assigned_users
                                 }}</span><br>
-                                <span class="text-sm font-normal text-gray-500">Last accepted today</span>
+                                <span class="text-sm font-normal text-gray-500">Overall users assigned</span>
                             </div>
                             <div>
                                 <svg class="w-12 h-12 mt-5 mr-2 text-gray-500" fill="none" stroke="currentColor"
@@ -74,7 +74,7 @@
                                 <span class="text-3xl font-semibold text-gray-700">{{ analytics.total_follow_up_actions
                                 }}
                                 </span><br>
-                                <span class="text-sm font-normal text-gray-500">Last accepted today</span>
+                                <span class="text-sm font-normal text-gray-500">System wide</span>
                             </span>
                             <span>
                                 <svg class="h-12 w-12 mt-5 mr-2 text-gray-500" fill="none" stroke="currentColor"
@@ -300,7 +300,8 @@
                                 </p>
                             </td>
                             <td class="hidden lg:table-cell">
-                                <p class="text-sm text-gray-700 font-medium">{{ visitor.user.name }}</p>
+                                <p v-if="visitor.user" class="text-sm text-gray-400 font-medium">{{visitor.user.name}}</p>
+                                <p v-else class="text-sm text-gray-400 font-medium">not assigned</p>
                             </td>
                             <td>
                                 <span v-if="visitor.state === 'pending'"

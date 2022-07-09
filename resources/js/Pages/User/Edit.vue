@@ -3,7 +3,16 @@
         <!-- <Navbar /> -->
         <div class="container mx-auto max-w-5xl">
             <div class="mt-8">
-                <Link :href="route('users')" as="button" type="button"
+                <Link v-if="props.role === 'admin'" :href="route('users')" as="button" type="button"
+                    class="flex items-center space-x-2 hover:text-gray-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span>Back</span>
+                </Link>
+                <Link v-else :href="route('dashboard')" as="button" type="button"
                     class="flex items-center space-x-2 hover:text-gray-500">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -34,11 +43,15 @@
             </div>
             <div class="flex space-x-12 mt-6">
                 <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[permission.update_users ? 'h-[123px]': 'h-[62px]']">
-                    <div @click="type = !type"
+                    <div v-if="props.role === 'admin'" @click="type = !type"
                         :class="[
                         !type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
                         <span class="font-semibold text-sm">User Information</span>
                         <span class="text-xs text-gray-500">Update users information</span>
+                    </div>
+                    <div v-else class="flex flex-col p-3  cursor-pointer hover:bg-gray-50">
+                        <span class="font-semibold text-sm">My Information</span>
+                        <span class="text-xs text-gray-500">Your account details</span>
                     </div>
                     <div v-if="permission.update_users" @click="type = !type"
                         :class="[
@@ -121,41 +134,44 @@
                         </form>
                     </div>
 
-                    <div v-if="type" class="flex flex-col bg-white shadow rounded-lg mb-6 mt-2">
-                        <form @submit.prevent="assignVisitors(assign.visitors)">
-                            <div class="flex flex-col p-6 border-b">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="text-xl text-gray-700 font-semibold">Assign Visitors</h3>
-                                        <span class="text-sm text-gray-500">Assign vistors to this user</span>
+                    <template v-if="props.role === 'admin'">
+                        <div v-if="type" class="flex flex-col bg-white shadow rounded-lg mb-6 mt-2">
+                            <form @submit.prevent="assignVisitors(assign.visitors)">
+                                <div class="flex flex-col p-6 border-b">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h3 class="text-xl text-gray-700 font-semibold">Assign Visitors</h3>
+                                            <span class="text-sm text-gray-500">Assign vistors to this user</span>
+                                        </div>
                                     </div>
+                                    <h3 class="text-gray-500 mt-4">Select Visitors</h3>
+                                    <select v-model="assign.visitors" name="visitors"
+                                        class="mt-3 px-6 py-3 rounded-md border text-gray-600 border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400"
+                                        required>
+                                        <option value="" selected>Select a visitors</option>
+                                        <option v-for="visitor in props.visitors" :key="visitor.id" :value="visitor.id">
+                                            {{ visitor.fullname }}
+                                        </option>
+                                    </select>
+                                    <span v-if="assign.errors" class="text-xs text-red-500">{{
+                                            assign.errors.user_id
+                                    }}</span>
+                                    <button type="submit"
+                                        class="w-48 justify-center bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white font-bold py-3 px-3 text-sm mt-6 inline-flex items-center group rounded-md">
+                                        <span v-if="assign.processing">Submitting...</span>
+                                        <span v-else>Assign Visitor</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4 ml-1 group-hover:translate-x-2 delay-100 duration-200 ease-in-out"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
                                 </div>
-                                <h3 class="text-gray-500 mt-4">Select Visitors</h3>
-                                <select v-model="assign.visitors" name="visitors"
-                                    class="mt-3 px-6 py-3 rounded-md border text-gray-600 border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400"
-                                    required>
-                                    <option value="" selected>Select a visitors</option>
-                                    <option v-for="visitor in props.visitors" :key="visitor.id" :value="visitor.id">
-                                        {{ visitor.fullname }}
-                                    </option>
-                                </select>
-                                <span v-if="assign.errors" class="text-xs text-red-500">{{
-                                        assign.errors.user_id
-                                }}</span>
-                                <button type="submit"
-                                    class="w-48 justify-center bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white font-bold py-3 px-3 text-sm mt-6 inline-flex items-center group rounded-md">
-                                    <span v-if="assign.processing">Submitting...</span>
-                                    <span v-else>Assign Visitor</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 ml-1 group-hover:translate-x-2 delay-100 duration-200 ease-in-out"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    </template>
+
                     <div v-if="!type" class="mt-12 mb-12" style="overflow-x:auto;">
                         <table class="w-full mt-2 rounded-lg shadow-lg">
                             <thead class="rounded-t-lg">
@@ -230,7 +246,7 @@
                                             class="text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
                                         Follow up
                                         </Link>
-                                        <Link :href="route('logout')" as="button" type="button"
+                                        <Link href="#" as="button" type="button"
                                             class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -259,6 +275,7 @@ import { HollowDotsSpinner } from 'epic-spinners'
 import { useForm } from '@inertiajs/inertia-vue3';
 import { createToast } from 'mosha-vue-toastify'
 import 'mosha-vue-toastify/dist/style.css'
+
 
 let type = ref(false)
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')

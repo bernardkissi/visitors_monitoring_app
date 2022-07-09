@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->index()->unsigned()->constrained('users')->nullable();
+            $table->foreignId('user_id')->nullable()->index()->unsigned()->constrained('users');
 
             $table->string('fullname');
             $table->string('email');

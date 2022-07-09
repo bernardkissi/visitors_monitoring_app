@@ -9,14 +9,14 @@ class SettingController extends Controller
 {
     public function index(Request $request)
     {
-        $setting = Setting::find(1);
+        $setting = Setting::where('id', 1)->first();
         return inertia('Settings/Index', ['setting' => $setting]);
     }
 
 
     public function update(Request $request)
     {
-        $setting = Setting::find(1);
+        $setting = Setting::where('id', 1)->first();
         $validated = $request->validate([
             'automate_welcome_message' => 'boolean',
             'msg_assignees' => 'boolean',

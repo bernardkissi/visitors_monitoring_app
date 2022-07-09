@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\AccessSeeder;
-use Database\Seeders\PermissionSeeder;
-use Database\Seeders\RoleSeeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\AccessSeeder;
+use Database\Seeders\SettingSeeder;
+use Database\Seeders\PermissionSeeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             AccessSeeder::class,
             AdminSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

@@ -39,7 +39,9 @@ class User extends Authenticatable
         'password',
     ];
 
-    public $cacheFor = 3600;
+    // public $cacheFor = 3600;
+
+    // protected static $flushCacheOnUpdate = true;
 
     /**
      * The attributes that should be hidden for serialization.

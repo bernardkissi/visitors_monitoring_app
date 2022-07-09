@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $total_assigned_users = User::query()->filter($query)->whereHas('visitors')->count();
         $total_follow_up_actions = Action::query()->filter($query)->count();
         $visitors_count =  $visitor->filter($query)->count();
-        $visitors =  $visitor->filter($query)->with('user')->take(20)->latest()->paginate(5);
+        $visitors =  $visitor->adminFilter()->filter($query)->with('user')->take(20)->latest()->paginate(5);
 
         $membership = Visitor::membership()->filter($query)->get();
         $visited = Visitor::visited()->filter($query)->get();

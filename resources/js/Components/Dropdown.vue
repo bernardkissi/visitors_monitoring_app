@@ -23,7 +23,7 @@
                     Account
                     </Link>
                     </MenuItem>
-                    <MenuItem v-slot="{ active }" :as="Link" :href="route('settings')">
+                    <MenuItem v-if="props.role === 'admin'" v-slot="{ active }" :as="Link" :href="route('settings')">
                     <Link :href="route('settings')" :class="[
                         active ? 'bg-purple-50 text-purple-800' : 'text-gray-900',
                         'group flex rounded-md items-center w-full px-2 py-2 text-sm',
@@ -52,6 +52,11 @@
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
 import { ref } from 'vue'
+
+const props = defineProps({
+    role:String
+})
+
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
 </script>
 

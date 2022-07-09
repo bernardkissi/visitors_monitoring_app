@@ -139,7 +139,8 @@
                                 <p class="text-xs text-gray-400 font-medium">{{ visitor.email }}</p>
                             </td>
                             <td class="hidden lg:table-cell">
-                                <p class="text-sm text-gray-700 font-medium">{{ visitor.user.name }}</p>
+                                <p v-if="visitor.user" class="text-sm text-gray-400 font-medium">{{visitor.user.name}}</p>
+                                <p v-else class="text-sm text-gray-400 font-medium">not assigned</p>
                             </td>
                             <td>
                                 <span v-if="visitor.state === 'pending'"

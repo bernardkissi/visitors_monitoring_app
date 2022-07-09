@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateVisitorRequest;
-use App\Jobs\SendVisitorAssignMessageJob;
-use App\Jobs\SendVisitorMessageJob;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use App\Jobs\SendVisitorMessageJob;
+use Illuminate\Support\Facades\Auth;
+use App\Jobs\SendVisitorAssignMessageJob;
+use App\Http\Requests\CreateVisitorRequest;
 
 class VisitorController extends Controller
 {
     public function index()
     {
-        $visitors = Visitor::query()->filter(session('year'))
+
+        $visitors =  Visitor::query()->adminFilter()->filter(session('year'))
             ->with('user')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->paginate(7);
 
-        $total_visitors =  Visitor::query()->filter(session('year'))->count();
+        $total_visitors = Visitor::query()->adminFilter()->filter(session('year'))->count();
 
         return inertia('Visitor/Index', [
             'visitors' => $visitors,

@@ -14,6 +14,8 @@ class Setting extends Model
 
     protected $guarded = [];
 
+    protected $table = 'settings';
+
     public $cacheFor = 6000;
 
     protected static $flushCacheOnUpdate = true;

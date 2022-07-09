@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\States\VisitorState;
-use App\Models\Traits\VisitorAnalytics;
 use App\Models\Traits\YearScope;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\ModelStates\HasStates;
+use Spatie\Activitylog\LogOptions;
+use App\Models\States\VisitorState;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Traits\VisitorAnalytics;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Rennokki\QueryCache\Traits\QueryCacheable;
-use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\ModelStates\HasStates;
+use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Visitor extends Model
 {
@@ -26,9 +27,9 @@ class Visitor extends Model
 
     protected $guarded = [];
 
-    public $cacheFor = 3600;
+    // public $cacheFor = 3600;
 
-    protected static $flushCacheOnUpdate = true;
+    // protected static $flushCacheOnUpdate = true;
 
     protected $casts = [
         'state' => VisitorState::class,
@@ -44,6 +45,13 @@ class Visitor extends Model
         return $this->hasMany(Action::class);
     }
 
+    public function scopeAdminFilter($query)
+    {
+        if (request()->user()->hasRole('admin')) {
+            return $query;
+        }
+        return $query->where('user_id', Auth::id());
+    }
 
     public function getActivitylogOptions(): LogOptions
     {
