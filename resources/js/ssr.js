@@ -6,7 +6,7 @@ import createServer from '@inertiajs/server'
 createServer((page) => createInertiaApp({
   page,
   render: renderToString,
-  resolve: name => require(`./Pages/${name}`),
+  resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),,
   setup({ app, props, plugin }) {
     return createSSRApp({
       render: () => h(app, props),
