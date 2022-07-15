@@ -131,7 +131,7 @@
                 <td>{{ $visitor->email}}</td>
                 <td>{{ $visitor->phone}}</td>
                 {{-- <td>{{ $visitor->user}}</td> --}}
-                <td>{{ $visitor->state->__toString()}}</td>
+                <td>{{ $visitor->state}}</td>
                 <td>{{ $visitor->visited_at}}</td>
             </tr>
         @endforeach
