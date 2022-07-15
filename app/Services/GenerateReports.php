@@ -8,7 +8,7 @@ class GenerateReports
 {
     public static function getData(string $month, string $year):array
     {
-        $visitors = DB::table('visitors')->whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
+        $visitors = DB::table('visitors')->whereMonth('visited_at', $month)->whereYear('visited_at', $year)->get();
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         return [
             'month' => $months[$month - 1],
