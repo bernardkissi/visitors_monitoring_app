@@ -30,7 +30,7 @@
             <form @submit.prevent="submit" id="visitor">
                 <div class="flex space-x-12 mt-6">
 
-                    <div class="flex flex-col bg-white rounded-lg w-1/4 h-[123px]">
+                    <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[$page.props.role === 'admin' ? 'h-[123px]': 'h-[62px]']">
                         <template v-if="$page.props.role === 'admin'">
                             <div @click="type = !type"
                                 :class="[
