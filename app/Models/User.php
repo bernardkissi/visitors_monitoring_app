@@ -24,8 +24,7 @@ class User extends Authenticatable
     Notifiable,
     HasRoles,
     LogsActivity,
-    QueryCacheable,
-    YearScope;
+    QueryCacheable;
 
     /**
      * The attributes that are mass assignable.
@@ -38,10 +37,6 @@ class User extends Authenticatable
         'phone',
         'password',
     ];
-
-    // public $cacheFor = 3600;
-
-    // protected static $flushCacheOnUpdate = true;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -84,6 +79,15 @@ class User extends Authenticatable
         return LogOptions::defaults()
         ->useLogName('User activity')
         ->setDescriptionForEvent(fn (string $eventName) => "User has been {$eventName}");
+    }
+
+    public function scopeFilter($query, string $year = null)
+    {
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        } else {
+            $query->whereYear('created_at', now()->year);
+        }
     }
 
     public function getAccessAttribute()
