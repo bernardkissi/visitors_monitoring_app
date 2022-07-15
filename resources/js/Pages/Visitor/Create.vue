@@ -30,7 +30,7 @@
             <form @submit.prevent="submit" id="visitor">
                 <div class="flex space-x-12 mt-6">
 
-                    <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[$page.props.role === 'admin' ? 'h-[123px]': 'h-[62px]']">
+                    <div class="flex flex-col bg-white rounded-lg w-1/4">
                         <template v-if="$page.props.role === 'admin'">
                             <div @click="type = !type"
                                 :class="[
@@ -284,7 +284,7 @@ import 'mosha-vue-toastify/dist/style.css'
 const props = defineProps({
     users: Object,
     errors: Object,
-    role:String,
+    role: String,
     auth:{
         type: Object,
         default: null
