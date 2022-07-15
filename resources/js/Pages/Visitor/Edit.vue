@@ -130,7 +130,7 @@
                                     <div class="mt-3 flex flex-col">
                                         <div class="flex items-center space-x-3">
                                             <div class="flex items-center">
-                                                <label>Sunday  Service</label>
+                                                <label>Sunday Service</label>
                                                 <input class="ml-3 p-2" type="checkbox"
                                                     v-model="form.service_attendance" name="service_attendance"
                                                     value="Sunday Service" disabled>
