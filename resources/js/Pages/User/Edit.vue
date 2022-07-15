@@ -269,7 +269,6 @@
 
 <script setup>
 import Navbar from '@/Components/Navbar.vue'
-import Select from '@/components/Select.vue'
 import { ref, computed } from 'vue'
 import { HollowDotsSpinner } from 'epic-spinners'
 import { useForm } from '@inertiajs/inertia-vue3';
