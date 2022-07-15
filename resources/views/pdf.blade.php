@@ -129,7 +129,7 @@
             <tr>
                 <td>{{ $visitor->fullname }}</td>
                 <td>{{ $visitor->email}}</td>
-                <td>{{ $visitor->mobile}}</td>
+                <td>{{ $visitor->phone}}</td>
                 <td>{{ $visitor->user->name}}</td>
                 <td>{{ $visitor->state->__toString()}}</td>
                 <td>{{ $visitor->visited_at}}</td>
