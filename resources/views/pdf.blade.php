@@ -130,7 +130,7 @@
                 <td>{{ $visitor->fullname }}</td>
                 <td>{{ $visitor->email}}</td>
                 <td>{{ $visitor->phone}}</td>
-                <td>{{ $visitor->user()->name}}</td>
+                <td>{{ $visitor->user->name}}</td>
                 <td>{{ $visitor->state}}</td>
                 <td>{{ $visitor->visited_at}}</td>
             </tr>
