@@ -37,6 +37,7 @@ class CreateVisitorRequest extends FormRequest
             'membership'=> 'required',
             'membership_detail'=> 'nullable',
             'help_information'=> 'required',
+            'visited_at' => 'required',
             'help_information_detail'=> 'nullable',
             'user_id'=> 'nullable|exists:users,id',
         ];

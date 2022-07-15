@@ -83,8 +83,14 @@
                                         <div class="flex flex-grow flex-col">
                                             <input type="text" name="email" placeholder="Enter Email Address"
                                                 v-model="form.email"
-                                                class="w-full px-6 py-3 rounded-md border border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400">
+                                                class="px-6 py-3 rounded-md border border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400">
                                             <span class="text-xs text-red-500">{{ errors.email }}</span>
+                                        </div>
+                                         <div class="flex flex-grow flex-col">
+                                            <input type="date" name="visited_at" placeholder="Visited Date"
+                                                v-model="form.visited_at"
+                                                class="w-full px-6 py-3 rounded-md border border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400">
+                                            <span class="text-xs text-red-500">{{ errors.visited_at }}</span>
                                         </div>
                                     </div>
                                     <h3 class="text-gray-400 mt-5">Select Age Range</h3>
@@ -288,6 +294,7 @@ let form = useForm({
     help_information: [],
     help_information_detail: '',
     user_id: '',
+    visited_at: '',
 
 })
 
