@@ -3560,6 +3560,13 @@ laravel-mix@^6.0.6:
     webpackbar "^5.0.0-3"
     yargs "^17.2.1"
 
+laravel-vite-plugin@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/laravel-vite-plugin/-/laravel-vite-plugin-0.3.0.tgz#3dbf0c3a3e08f9551eb564052f5238252a0e81d6"
+  integrity sha512-lLtDt6XhGY7D094jubnNmyQnscVwv+w4ol24yMhglu6PHiICSzRv4v7gBUYYwFiE1coeBooNcJ0bFbdbcS3Izg==
+  dependencies:
+    vite-plugin-full-reload "^1.0.1"
+
 lilconfig@^2.0.3, lilconfig@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.0.5.tgz#19e57fd06ccc3848fd1891655b5a447092225b25"
@@ -5399,6 +5406,14 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
+
+vite-plugin-full-reload@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-full-reload/-/vite-plugin-full-reload-1.0.1.tgz#9cd8bfebf923a2b6177a6e9b1fa516302bff8c8d"
+  integrity sha512-G/IXcDjuhfDAK4zEzWTM/kL0DiAVv0+Dox+zGZeJyUWhwtg34Q9XtJkNXveku+mTSKE20TMp3TF8D7bFEhmvfA==
+  dependencies:
+    picocolors "^1.0.0"
+    picomatch "^2.3.1"
 
 vm-browserify@^1.0.1:
   version "1.1.2"
