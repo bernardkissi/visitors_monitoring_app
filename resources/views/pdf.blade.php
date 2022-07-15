@@ -123,16 +123,16 @@
             <th>Mobile</th>
             <th>Assignee</th>
             <th>Status</th>
-            <th>Created At</th>
+            <th>Visited At</th>
         </tr>
         @foreach ($visitors as $visitor)
             <tr>
                 <td>{{ $visitor->fullname }}</td>
-                <td>Bernardkissi18@gmail.com</td>
-                <td>0543063709</td>
-                <td>Asamoah Asumadu</td>
-                <td>called</td>
-                <td>12-05-2022</td>
+                <td>{{ $visitor->email}}</td>
+                <td>{{ $visitor->mobile}}</td>
+                <td>{{ $visitor->user->name}}</td>
+                <td>{{ $visitor->state->__toString()}}</td>
+                <td>{{ $visitor->visited_at}}</td>
             </tr>
         @endforeach
 
