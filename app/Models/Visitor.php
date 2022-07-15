@@ -22,8 +22,7 @@ class Visitor extends Model
     LogsActivity,
     VisitorAnalytics,
     Notifiable,
-    QueryCacheable,
-    YearScope;
+    QueryCacheable;
 
     protected $guarded = [];
 
@@ -51,6 +50,15 @@ class Visitor extends Model
             return $query;
         }
         return $query->where('user_id', Auth::id());
+    }
+
+    public function scopeFilter($query, string $year = null)
+    {
+        if ($year) {
+            $query->whereYear('visited_at', $year);
+        } else {
+            $query->whereYear('visited_at', now()->year);
+        }
     }
 
     public function getActivitylogOptions(): LogOptions

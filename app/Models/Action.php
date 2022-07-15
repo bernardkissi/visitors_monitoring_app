@@ -11,7 +11,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Action extends Model
 {
-    use HasFactory, LogsActivity, QueryCacheable, YearScope;
+    use
+    HasFactory,
+    LogsActivity,
+    QueryCacheable,
+    YearScope;
 
     protected $guarded = [];
 

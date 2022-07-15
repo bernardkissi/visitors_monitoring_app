@@ -8,9 +8,9 @@ trait YearScope
     public function scopeFilter(Builder $query, string $year = null)
     {
         if ($year) {
-            $query->whereYear('visited_at', $year);
+            $query->whereYear('created_at', $year);
         } else {
-            $query->whereYear('visited_at', now()->year);
+            $query->whereYear('created_at', now()->year);
         }
     }
 }
