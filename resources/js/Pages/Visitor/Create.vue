@@ -31,18 +31,26 @@
                 <div class="flex space-x-12 mt-6">
 
                     <div class="flex flex-col bg-white rounded-lg w-1/4 h-[123px]">
-                        <div @click="type = !type"
-                            :class="[
-                            !type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
-                            <span class="font-medium text-sm">Personal/Church Information</span>
-                            <span class="text-xs text-gray-500">Visitors personal information</span>
-                        </div>
-                        <div @click="type = !type"
-                            :class="[
-                            type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
-                            <span class="font-semibold text-sm">Assign Member (optional) </span>
-                            <span class="text-xs text-gray-500">Assign a member to a visitor</span>
-                        </div>
+                        <template v-if="$page.props.role === 'admin'">
+                            <div @click="type = !type"
+                                :class="[
+                                !type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
+                                <span class="font-medium text-sm">Personal/Church Information</span>
+                                <span class="text-xs text-gray-500">Visitors personal information</span>
+                            </div>
+                            <div @click="type = !type"
+                                :class="[
+                                type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
+                                <span class="font-semibold text-sm">Assign Member (optional) </span>
+                                <span class="text-xs text-gray-500">Assign a member to a visitor</span>
+                            </div>
+                        </template>
+                        <template v-else>
+                             <div class="flex flex-col p-3  cursor-pointer hover:bg-gray-50">
+                                <span class="font-medium text-sm">Personal/Church Information</span>
+                                <span class="text-xs text-gray-500">Visitors personal information</span>
+                            </div>
+                        </template>
                     </div>
                     <div class="w-3/4">
                         <Transition>
@@ -246,11 +254,13 @@
                                     <h3 class="text-gray-500 mt-4">Assign Member</h3>
                                     <select v-model="form.user_id" name="user_id"
                                         class="mt-3 px-6 py-3 rounded-md border border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400">
-                                        <option value="" selected>Select a user</option>
-                                        <option v-for="user in props.users" :key="user.id" :value="user.id">{{
-                                                user.name
-                                        }}
-                                        </option>
+                                        <template v-if="$page.props.role === 'admin'">
+                                                <option value="" selected>Select a user</option>
+                                                <option v-for="user in props.users" :key="user.id" :value="user.id">{{user.name}}</option>
+                                        </template>
+                                        <template v-else>
+                                            <option :value="$page.props.auth.user.id">{{$page.props.auth.user.name}}</option>
+                                        </template>
                                     </select>
                                     <span class="text-xs text-red-500">{{ errors.user_id }}</span>
                                 </div>
@@ -274,6 +284,11 @@ import 'mosha-vue-toastify/dist/style.css'
 const props = defineProps({
     users: Object,
     errors: Object,
+    role:String,
+    auth:{
+        type: Object,
+        default: null
+    }
 })
 
 const type = ref(false);
