@@ -14,7 +14,7 @@ class GenerateReports
         return [
             'month' => $months[$month - 1],
             'year' => $year,
-            'visitors' => $visitors->with('user'),
+            'visitors' => $visitors,
             'total_visitors' => $total_visitors = $visitors->count(),
             'total_assigned' => $assigned_visitors = $visitors->whereNotNull('user_id')->count(),
             'total_unassigned' => $total_visitors - $assigned_visitors,
