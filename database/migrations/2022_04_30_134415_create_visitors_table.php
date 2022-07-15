@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->nullable()->index()->unsigned()->constrained('users');
 
             $table->string('fullname');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone');
             $table->string('address');
             $table->string('occupation');
