@@ -30,7 +30,7 @@
             <form @submit.prevent="submit" id="visitor">
                 <div class="flex space-x-12 mt-6">
 
-                    <div class="flex flex-col bg-white rounded-lg w-1/4">
+                    <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[permission.update_users ? 'h-[123px]': 'h-[62px]']">
                         <template v-if="$page.props.role === 'admin'">
                             <div @click="type = !type"
                                 :class="[
@@ -285,6 +285,7 @@ const props = defineProps({
     users: Object,
     errors: Object,
     role: String,
+    permission: Object,
     auth:{
         type: Object,
         default: null
