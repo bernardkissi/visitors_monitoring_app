@@ -39,7 +39,8 @@ class VisitorController extends Controller
 
     public function store(CreateVisitorRequest $request)
     {
-        dd($request->validated());
+
+        dd(Auth::user()->id, $request->validated());
         $visitor = Visitor::create($request->validated());
         SendVisitorMessageJob::dispatch($visitor)->delay(now()->addSeconds(10));
         return redirect()->route('visitors')->with('success', 'Visitor created successfully.');
