@@ -45,7 +45,7 @@
                                 <span class="text-xs text-gray-500">Assign a member to a visitor</span>
                             </div>
                         </template>
-                        <template>
+                        <template v-else>
                              <div class="flex flex-col p-3 cursor-pointer hover:bg-gray-50">
                                 <span class="font-medium text-sm">Personal/Church Information</span>
                                 <span class="text-xs text-gray-500">Visitors personal information</span>
