@@ -254,13 +254,14 @@
                                     <h3 class="text-gray-500 mt-4">Assign Member</h3>
                                     <select v-model="form.user_id" name="user_id"
                                         class="mt-3 px-6 py-3 rounded-md border border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400">
-                                        <template v-if="$page.props.role === 'admin'">
+
                                                 <option value="" selected>Select a user</option>
-                                                <option v-for="user in props.users" :key="user.id" :value="user.id">{{user.name}}</option>
-                                        </template>
-                                        <template v-else>
+                                                <option :value="$page.props.auth.user.id">{{$page.props.auth.user.name}}</option>
+                                                <!-- <option v-if="$page.props.role === 'admin'" v-for="user in props.users" :key="user.id" :value="user.id">{{user.name}}</option> -->
+
+                                        <!-- <template v-else>
                                             <option :value="$page.props.auth.user.id" selected>{{$page.props.auth.user.name}}</option>
-                                        </template>
+                                        </template> -->
                                     </select>
                                     <span class="text-xs text-red-500">{{ errors.user_id }}</span>
                                 </div>

@@ -27663,8 +27663,7 @@ var _hoisted_105 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_106 = ["value"];
-var _hoisted_107 = ["value"];
-var _hoisted_108 = {
+var _hoisted_107 = {
   "class": "text-xs text-red-500"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -28011,28 +28010,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         name: "user_id",
         "class": "mt-3 px-6 py-3 rounded-md border border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400"
-      }, [_ctx.$page.props.role === 'admin' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-        key: 0
-      }, [_hoisted_105, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.users, function (user) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
-          key: user.id,
-          value: user.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.name), 9
-        /* TEXT, PROPS */
-        , _hoisted_106);
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 64
-      /* STABLE_FRAGMENT */
-      )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
-        key: 1,
-        value: _ctx.$page.props.auth.user.id,
-        selected: ""
+      }, [_hoisted_105, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+        value: _ctx.$page.props.auth.user.id
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.auth.user.name), 9
       /* TEXT, PROPS */
-      , _hoisted_107))], 512
+      , _hoisted_106), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <option v-if=\"$page.props.role === 'admin'\" v-for=\"user in props.users\" :key=\"user.id\" :value=\"user.id\">{{user.name}}</option> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <template v-else>\n                                            <option :value=\"$page.props.auth.user.id\" selected>{{$page.props.auth.user.name}}</option>\n                                        </template> ")], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.user_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.user_id), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.user_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_107, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.user_id), 1
       /* TEXT */
       )])], 512
       /* NEED_PATCH */
