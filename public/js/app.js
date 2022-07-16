@@ -24793,7 +24793,7 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "w-48"
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "text-xl text-gray-600 pt-2"
-}, " Visitors Montioring System")], -1
+}, " Visitors Monitoring System")], -1
 /* HOISTED */
 );
 
@@ -27214,7 +27214,7 @@ var _hoisted_11 = {
   "class": "flex space-x-12 mt-6"
 };
 var _hoisted_12 = {
-  "class": "flex flex-col bg-white rounded-lg w-1/4 h-auto"
+  "class": "flex flex-col bg-white rounded-lg w-1/4 h-[123px]"
 };
 
 var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {

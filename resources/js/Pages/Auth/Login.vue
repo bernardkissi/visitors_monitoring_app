@@ -4,7 +4,7 @@
             <div class="flex items-center justify-center gap-3">
                 <img src="/images/gracefields.png" alt="logo" class="w-48">
             </div>
-            <h3 class="text-xl text-gray-600 pt-2"> Visitors Montioring System</h3>
+            <h3 class="text-xl text-gray-600 pt-2"> Visitors Monitoring System</h3>
         </div>
         <div class="container mx-auto w-full px-6 lg:px-0 lg:w-1/3 mt-8">
             <form @submit.prevent="submit">
