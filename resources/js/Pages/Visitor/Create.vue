@@ -31,7 +31,7 @@
                 <div class="flex space-x-12 mt-6">
 
                     <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[permission.update_users ? 'h-[123px]': 'h-[62px]']">
-                        <template v-if="$page.props.role === 'admin'">
+                        <template>
                             <div @click="type = !type"
                                 :class="[
                                 !type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
@@ -45,12 +45,12 @@
                                 <span class="text-xs text-gray-500">Assign a member to a visitor</span>
                             </div>
                         </template>
-                        <template v-else>
+                        <!-- <template>
                              <div class="flex flex-col p-3  cursor-pointer hover:bg-gray-50">
                                 <span class="font-medium text-sm">Personal/Church Information</span>
                                 <span class="text-xs text-gray-500">Visitors personal information</span>
                             </div>
-                        </template>
+                        </template> -->
                     </div>
                     <div class="w-3/4">
                         <Transition>
