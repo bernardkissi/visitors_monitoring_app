@@ -28036,7 +28036,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
         key: 1,
-        value: _ctx.$page.props.auth.user.id
+        value: _ctx.$page.props.auth.user.id,
+        selected: ""
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.auth.user.name), 9
       /* TEXT, PROPS */
       , _hoisted_109))], 512

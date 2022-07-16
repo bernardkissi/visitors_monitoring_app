@@ -259,7 +259,7 @@
                                                 <option v-for="user in props.users" :key="user.id" :value="user.id">{{user.name}}</option>
                                         </template>
                                         <template v-else>
-                                            <option :value="$page.props.auth.user.id">{{$page.props.auth.user.name}}</option>
+                                            <option :value="$page.props.auth.user.id" selected>{{$page.props.auth.user.name}}</option>
                                         </template>
                                     </select>
                                     <span class="text-xs text-red-500">{{ errors.user_id }}</span>
