@@ -30,8 +30,8 @@
             <form @submit.prevent="submit" id="visitor">
                 <div class="flex space-x-12 mt-6">
 
-                    <div class="flex flex-col bg-white rounded-lg w-1/4 h-[123px]">
-                        <template v-if="$page.props.role === 'user'">
+                    <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[permission.update_users ? 'h-[123px]': 'h-[62px]']">
+                        <template v-if="$page.props.role === 'admin'">
                             <div @click="type = !type"
                                 :class="[
                                 !type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
@@ -46,7 +46,7 @@
                             </div>
                         </template>
                         <template>
-                             <div class="flex flex-col p-3  cursor-pointer hover:bg-gray-50">
+                             <div class="flex flex-col p-3 cursor-pointer hover:bg-gray-50">
                                 <span class="font-medium text-sm">Personal/Church Information</span>
                                 <span class="text-xs text-gray-500">Visitors personal information</span>
                             </div>
@@ -246,7 +246,7 @@
                         </Transition>
                         <Transition>
                             <div v-show="type" class="flex flex-col bg-white shadow rounded-lg">
-                                <div class="flex flex-col p-6">
+                                <div v-if="role === 'admin'" class="flex flex-col p-6">
                                     <h3 class="text-xl text-gray-700 font-semibold">Assign Member <span
                                             class="text-gray-400 text-sm">(optional)</span></h3>
                                     <span class="text-sm text-gray-500">Assign member to this visitor</span>
@@ -254,14 +254,8 @@
                                     <h3 class="text-gray-500 mt-4">Assign Member</h3>
                                     <select v-model="form.user_id" name="user_id"
                                         class="mt-3 px-6 py-3 rounded-md border border-gray-300 focus:outline-none focus:border focus:ring focus:ring-gray-400">
-
                                                 <option value="" selected>Select a user</option>
-                                                <option :value="$page.props.auth.user.id">{{$page.props.auth.user.name}}</option>
-                                                <!-- <option v-if="$page.props.role === 'admin'" v-for="user in props.users" :key="user.id" :value="user.id">{{user.name}}</option> -->
-
-                                        <!-- <template v-else>
-                                            <option :value="$page.props.auth.user.id" selected>{{$page.props.auth.user.name}}</option>
-                                        </template> -->
+                                                <option v-for="user in props.users" :key="user.id" :value="user.id">{{user.name}}</option>
                                     </select>
                                     <span class="text-xs text-red-500">{{ errors.user_id }}</span>
                                 </div>
@@ -310,7 +304,7 @@ let form = useForm({
     membership_detail: '',
     help_information: [],
     help_information_detail: '',
-    user_id: '',
+    user_id: props.auth.user.id,
     visited_at: '',
 
 })
