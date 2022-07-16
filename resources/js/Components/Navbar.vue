@@ -10,7 +10,7 @@
                 <div class="flex items-center gap-4 text-white font-medium">
                     <span>
                         <code class="text-sm">
-                            v.1.1
+                            v.1.2
                         </code>
                     </span>
                     <button @click="openModal" class="cursor-pointer px-3 py-1 rounded">Developer

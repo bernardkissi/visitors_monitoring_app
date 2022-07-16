@@ -18,7 +18,7 @@ class VisitorController extends Controller
         $visitors =  Visitor::query()->adminFilter()->filter(session('year'))
             ->with('user')
             ->orderBy('created_at', 'asc')
-            ->paginate(7);
+            ->paginate(10);
 
         $total_visitors = Visitor::query()->adminFilter()->filter(session('year'))->count();
 
