@@ -23041,7 +23041,7 @@ var _hoisted_5 = {
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("code", {
   "class": "text-sm"
-}, " v.1.0 ")], -1
+}, " v.1.1 ")], -1
 /* HOISTED */
 );
 
