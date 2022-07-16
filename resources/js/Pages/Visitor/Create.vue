@@ -30,8 +30,8 @@
             <form @submit.prevent="submit" id="visitor">
                 <div class="flex space-x-12 mt-6">
 
-                    <div class="flex flex-col bg-white rounded-lg w-1/4" :class="[permission.update_users ? 'h-[123px]': 'h-[62px]']">
-                        <template v-if="$page.props.role === 'admin'">
+                    <div class="flex flex-col bg-white rounded-lg w-1/4 h-auto">
+                        <template v-if="$page.props.role === 'user'">
                             <div @click="type = !type"
                                 :class="[
                                 !type ? 'bg-purple-50 border-l-4 border-purple-600 text-purple-600' : '', 'flex flex-col p-3  cursor-pointer hover:bg-gray-50']">
