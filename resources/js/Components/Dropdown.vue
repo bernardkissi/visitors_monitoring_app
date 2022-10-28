@@ -57,6 +57,6 @@ const props = defineProps({
     role:String
 })
 
-const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
+const image = ref('https://ui-avatars.com/api/?background=dbeafe&color=1e3a8a&bold=true&name=')
 </script>
 

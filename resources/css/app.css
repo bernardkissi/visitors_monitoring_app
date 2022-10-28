@@ -3,3 +3,56 @@
 @tailwind utilities;
 
 
+select {
+    appearance: none;
+  }
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: "▼";
+    font-size: 0.6rem;
+    top: 19px;
+    right: 10px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+
+.date-wrapper {
+    position: relative;
+}
+
+.date-wrapper::after {
+    content: "▼";
+    font-size: 0.5rem;
+    top: 15px;
+    right: 20px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+.date-wrapper::before {
+    content: "⏱";
+    font-size: 0.9rem;
+    top: 0.65rem;
+    left: 2px;
+    padding-left: 10px;
+    padding-right: 30px;
+    position: absolute;
+}
+
+.filter-wrapper {
+    position: relative;
+}
+
+.filter-wrapper::after {
+    content: "▼";
+    font-size: 0.6rem;
+    top: 18px;
+    right: 20px;
+    margin-left: 5px;
+    position: absolute;
+}

@@ -4,26 +4,31 @@
         <div class="container mx-auto max-w-5xl mt-12">
             <div class="flex items-center justify-between mb-4">
                 <span class="font-medium text-base"></span>
-                <div class="hidden md:flex items-center space-x-4">
-                    <svg class="h-5 w-5 -mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                    <span class="text-gray-600 font-medium">{{ current_month_name }} - Year: </span>
-                    <select v-model="year"
-                        class="outline-none focus:outline-none w-24 mr-3 shadow block text-gray-600 hover:text-gray-800 bg-white px-3 py-1 rounded border-0 border-gray-700 text-sm">
-                        <option value="2022" selected>2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                        <option value="2029">2029</option>
-                        <option value="2030">2030</option>
-                    </select>
+                <div class="hidden md:flex items-center space-x-0">
+
+                    <span class="flex px-3 py-2 rounded-l bg-purple-100 border-r border-gray-200 text-sm">
+                        <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <span class="text-gray-900">{{ current_month_name }}</span>
+                    </span>
+                    <div class="date-wrapper">
+                        <select v-model="year"
+                        class="outline-none focus:outline-none pl-[32px] w-32 block text-gray-600 hover:text-gray-800 bg-white px-3 py-2 rounded-r border-0 border-gray-700 text-sm">
+                            <option value="2022" selected>2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col mt-3 w-full p-3 lg:p-0 lg:flex-row">
@@ -93,25 +98,27 @@
                 <div class="hidden md:flex md:-mt-2 lg:mt-3 xl:mt-3 justify-between mt-3">
                     <span class="text-gray-700 font-medium text-xl">Visitors Analytics <span
                             class="md:hidden text-gray-500 font-normal text-sm px-1"> 3 seconds ago</span></span>
-                    <div class="hidden md:flex items-center space-x-3">
-                        <svg class="w-5 h-5 -mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                        </svg>
-                        <span class="text-gray-600 font-medium">Filter data: </span>
-                        <select v-model="active"
-                            class="outline-none focus:outline-none w-48 mr-3 shadow block text-gray-600 hover:text-gray-800 bg-white px-3 py-1 rounded border-0 border-gray-700 text-sm">
-                            <option value="membership">Membership Analytics</option>
-                            <option value="visitors">Visitors Analytics</option>
-                            <option value="age">Age Analytics</option>
-                            <option value="visited">Channel Analytics</option>
-                            <option value="help">Assitance Analytics</option>
-                            <option value="service">Service Analytics</option>
-                        </select>
-                        <!-- <button
-                            class="block border-b text-gray-600 hover:text-gray-800 bg-white px-3 py-1 border-1 rounded shadow text-sm">20-09-19
-                            - 30-09-19</button> -->
+                    <div class="hidden md:flex items-center space-x-0">
+
+                        <div class="flex bg-purple-100 py-3 rounded-l px-3 text-sm border-r border-gray-200 text-gray-900 space-x-2">
+                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                            <span>Filter by: </span>
+                        </div>
+                        <div class="filter-wrapper">
+                            <select v-model="active"
+                                class="outline-none focus:outline-none w-48 block text-gray-900 hover:text-gray-800 bg-white px-3 py-3 rounded-r border-0 border-gray-700 text-sm">
+                                <option value="membership">Membership Analytics</option>
+                                <option value="visitors">Visitors Analytics</option>
+                                <option value="age">Age Analytics</option>
+                                <option value="visited">Channel Analytics</option>
+                                <option value="help">Assitance Analytics</option>
+                                <option value="service">Service Analytics</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row shadow rounded-lg mt-3 bg-white">
@@ -237,6 +244,13 @@
 
             <div class="mt-12" style="overflow-x:auto;">
                 <div class="flex items-center justify-end">
+                    <div class="select-wrapper">
+                        <select class="block mr-5 py-3 px-4 w-full rounded-l-lg border-r border-gray-200 text-sm focus:outline-none">
+                            <option value="filter" selected>Filter By</option>
+                            <option value="Called">Called</option>
+                            <option value="Visited">Visited</option>
+                        </select>
+                    </div>
                     <div class="hidden lg:block relative w-64">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                             <svg class="h-5 w-5 fill-current text-gray-500" viewBox="0 0 24 24">
@@ -245,7 +259,7 @@
                             </svg>
                         </span>
                         <input
-                            class="block shadow pl-8 pr-4 py-3 w-full bg-white rounded-lg text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
+                            class="block pl-8 pr-4 py-3 w-full bg-white rounded-r-lg text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
                             placeholder="Search for visitors" />
                     </div>
                 </div>
@@ -254,9 +268,9 @@
                         <tr class="text-left rounded-t-lg bg-gray-50 border-b border-grey uppercase">
                             <th class="px-2 py-4">
                                 <span
-                                    class="bg-white border-2 ml-2 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus-within:border-blue-500">
+                                    class="bg-white border-2 ml-2 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus-within:border-purple-500">
                                     <input type="checkbox" class="opacity-0 absolute">
-                                    <svg class="fill-current hidden w-4 h-4 text-blue-500 pointer-events-none"
+                                    <svg class="fill-current hidden w-4 h-4 text-purple-500 pointer-events-none"
                                         viewBox="0 0 20 20">
                                         <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
                                     </svg>
@@ -274,7 +288,7 @@
                             class="accordion border-b border-gray-100 hover:bg-gray-50">
                             <td class="px-3 py-5">
                                 <span
-                                    class="bg-white border-2 ml-1 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus-within:border-blue-500">
+                                    class="bg-white border-2 ml-1 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 focus-within:border-purple-500">
                                     <input type="checkbox" class="opacity-0 absolute">
                                     <svg class="fill-current hidden w-4 h-4 text-green-500 pointer-events-none"
                                         viewBox="0 0 20 20">
@@ -322,11 +336,11 @@
                             </td>
                             <td class="flex space-x-3">
                                 <Link :href="route('actions.visitor', visitor.id)" as="button" type="button"
-                                    class="text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                    class="text-xs text-purple-600 py-1 px-3 bg-purple-50 rounded-md hover:bg-gray-100">
                                 Follow up
                                 </Link>
                                 <Link :href="route('visitor.edit', visitor.id)" as="button" type="button"
-                                    class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                    class="flex items-center space-x-2 text-xs text-purple-600 py-1 px-3 bg-purple-50 rounded-md hover:bg-gray-100">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -337,7 +351,7 @@
                                 </svg>
                                 </Link>
                                 <Link href="#" as="button" type="button" preserve-scroll
-                                    class="flex items-center space-x-2 text-xs text-blue-600 py-1 px-3 bg-blue-50 rounded-md hover:bg-gray-100">
+                                    class="flex items-center space-x-2 text-xs text-purple-600 py-1 px-3 bg-purple-50 rounded-md hover:bg-gray-100">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -375,13 +389,12 @@ import Navbar from '@/Components/Navbar.vue'
 import BarChart from '@/Components/BarChart.vue'
 import AnalyticsChart from '@/Components/AnalyticsChart.vue'
 import Pagination from '@/Components/Pagination.vue'
-import { ref, watch, computed } from 'vue'
+import { ref, reactive, watch, computed } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
+
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
-
 const weekOfYear = require('dayjs/plugin/weekOfYear')
-
 
 dayjs.extend(relativeTime)
 dayjs.extend(weekOfYear)
@@ -390,11 +403,23 @@ const month = ["January", "February", "March", "April", "May", "June", "July", "
 
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
 const active = ref('visitors')
+const filters =  reactive({form: {
+    search: 'fasdfdsa',
+    state: 'this.filters.status'
+}})
 const props = defineProps({
     analytics: {
         type: Object,
         default: () => null,
     },
+    filters: {
+        type: Object,
+        default: () => {},
+    },
+    contacts: {
+        type: Object,
+        default: () => {},
+    }
 })
 const year = ref(props.analytics.query ? props.analytics.query : '2022')
 
