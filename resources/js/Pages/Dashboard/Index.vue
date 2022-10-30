@@ -351,7 +351,7 @@
                                     </path>
                                 </svg>
                                 </Link>
-                                <Link href="#" as="button" type="button" preserve-scroll
+                                <Link :href="route('visitor.delete', visitor.id)" method="delete" as="button" type="button" preserve-scroll
                                     class="flex items-center space-x-2 text-xs text-purple-600 py-1 px-3 bg-purple-50 rounded-md hover:bg-gray-100">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -390,7 +390,7 @@ import Navbar from '@/Components/Navbar.vue'
 import BarChart from '@/Components/BarChart.vue'
 import AnalyticsChart from '@/Components/AnalyticsChart.vue'
 import Pagination from '@/Components/Pagination.vue'
-import { ref, reactive, watch, computed } from 'vue'
+import { ref, reactive, watch, computed} from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import throttle from 'lodash/throttle'
 
@@ -417,7 +417,6 @@ const props = defineProps({
     },
 })
 const year = ref(props.analytics.query ? props.analytics.query : '2022')
-
 
 watch(filters, throttle(function(value) {
     Inertia.get('dashboard', {search: value.form.search, status: value.form.status},

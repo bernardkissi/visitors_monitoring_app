@@ -59,7 +59,7 @@ class VisitorController extends Controller
     public function delete(Visitor $visitor)
     {
         $visitor->delete();
-        return redirect()->route('visitors')->with('success', 'Visitor deleted successfully.');
+        return redirect()->back()->with('success', 'Visitor deleted successfully.');
     }
 
     public function assignVisitor(Visitor $visitor, Request $request)

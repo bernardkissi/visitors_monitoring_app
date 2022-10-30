@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index()->constrained('users')->nullable();
-            $table->foreignId('visitor_id')->index()->constrained('visitors');
+            $table->foreignId('visitor_id')->index()->constrained('visitors')->cascadeOnDelete();
 
             $table->string('action_performed');
             $table->text('action_performed_detail')->nullable();
