@@ -24,8 +24,8 @@ class CreateVisitorRequest extends FormRequest
     public function rules()
     {
         return [
-            'fullname'=> 'required|string',
-            'email' => 'nullable|email',
+            'name' => 'required|unique:users,fullname',
+            'email' => 'required|email|unique:visitors',
             'phone'=> 'required',
             'address'=> 'required',
             'occupation'=> 'required',
