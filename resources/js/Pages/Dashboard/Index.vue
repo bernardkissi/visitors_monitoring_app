@@ -245,10 +245,11 @@
             <div class="mt-12" style="overflow-x:auto;">
                 <div class="flex items-center justify-end">
                     <div class="select-wrapper">
-                        <select class="block mr-5 py-3 px-4 w-full rounded-l-lg border-r border-gray-200 text-sm focus:outline-none">
-                            <option value="filter" selected>Filter By</option>
-                            <option value="Called">Called</option>
-                            <option value="Visited">Visited</option>
+                        <select v-model="filters.form.status" class="block mr-5 py-3 text-gray-900 px-4 w-full rounded-l-lg border-r border-gray-200 text-sm focus:outline-none">
+                            <option class="text-gray-900" value="" selected>Filter By</option>
+                            <option value="pending">Pending</option>
+                            <option value="called">Called</option>
+                            <option value="visited">Visited</option>
                         </select>
                     </div>
                     <div class="hidden lg:block relative w-64">
@@ -258,8 +259,8 @@
                                     d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z" />
                             </svg>
                         </span>
-                        <input
-                            class="block pl-8 pr-4 py-3 w-full bg-white rounded-r-lg text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
+                        <input v-model="filters.form.search"
+                            class="block pl-8 pr-4 py-3 w-full bg-white rounded-r-lg text-sm placeholder-gray-400 focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
                             placeholder="Search for visitors" />
                     </div>
                 </div>
@@ -391,6 +392,7 @@ import AnalyticsChart from '@/Components/AnalyticsChart.vue'
 import Pagination from '@/Components/Pagination.vue'
 import { ref, reactive, watch, computed } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
+import throttle from 'lodash/throttle'
 
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
@@ -404,24 +406,24 @@ const month = ["January", "February", "March", "April", "May", "June", "July", "
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
 const active = ref('visitors')
 const filters =  reactive({form: {
-    search: 'fasdfdsa',
-    state: 'this.filters.status'
+    search: props.analytics.filters.search,
+    status: props.analytics.filters.status ?? ''
 }})
+
 const props = defineProps({
     analytics: {
         type: Object,
         default: () => null,
     },
-    filters: {
-        type: Object,
-        default: () => {},
-    },
-    contacts: {
-        type: Object,
-        default: () => {},
-    }
 })
 const year = ref(props.analytics.query ? props.analytics.query : '2022')
+
+
+watch(filters, throttle(function(value) {
+    Inertia.get('dashboard', {search: value.form.search, status: value.form.status},
+    { preserveState: true, preserveScroll: true, replace: true }),
+    {deep: true}
+}, 600))
 
 const current_month = new Date().getMonth() + 1;
 const current_month_name = computed(() => month[current_month - 1]);

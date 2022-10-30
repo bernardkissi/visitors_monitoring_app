@@ -52,13 +52,31 @@ class Visitor extends Model
         return $query->where('user_id', Auth::id());
     }
 
-    public function scopeFilter($query, string $year = null)
+    public function scopeFilterWithYear($query, string $year = null)
     {
         if ($year) {
             $query->whereYear('visited_at', $year);
         } else {
             $query->whereYear('visited_at', now()->year);
         }
+    }
+
+    public function scopeFilterWithQuery($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null , function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('fullname', 'like', '%'.$search.'%')
+                    ->orWhere('address', 'like', '%'.$search.'%');
+            });
+        })->when($filters['status'] ?? null, function ($query, $status) {
+            if ($status === 'called') {
+                $query->where('state', '=', 'called');
+            } elseif ($status === 'visited') {
+                $query->where('state', '=', 'visited');
+            } elseif ($status === 'pending') {
+                $query->where('state', '=', 'pending');
+            }
+        });
     }
 
     public function getActivitylogOptions(): LogOptions

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             AccessSeeder::class,
             AdminSeeder::class,
             SettingSeeder::class,
+            VisitorSeeder::class,
         ]);
     }
 }

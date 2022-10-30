@@ -15,12 +15,12 @@ class VisitorController extends Controller
     public function index()
     {
 
-        $visitors =  Visitor::query()->adminFilter()->filter(session('year'))
+        $visitors =  Visitor::query()->adminFilter()->filterWithYear(session('year'))
             ->with('user')
             ->orderBy('created_at', 'asc')
             ->paginate(10);
 
-        $total_visitors = Visitor::query()->adminFilter()->filter(session('year'))->count();
+        $total_visitors = Visitor::query()->adminFilter()->filterWithYear(session('year'))->count();
 
         return inertia('Visitor/Index', [
             'visitors' => $visitors,

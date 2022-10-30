@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait YearScope
 {
-    public function scopeFilter(Builder $query, string $year = null)
+    public function scopeFilterWithYear(Builder $query, string $year = null)
     {
         if ($year) {
             $query->whereYear('created_at', $year);
