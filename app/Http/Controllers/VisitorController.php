@@ -14,16 +14,23 @@ class VisitorController extends Controller
 {
     public function index()
     {
+        $filters = request()->only(['search', 'status']);
 
-        $visitors =  Visitor::query()->adminFilter()->filterWithYear(session('year'))
+        $visitors =  Visitor::query()->adminFilter()
+            ->filterWithYear(session('year'))
+            ->filterWithQuery($filters)
             ->with('user')
-            ->orderBy('created_at', 'asc')
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        $total_visitors = Visitor::query()->adminFilter()->filterWithYear(session('year'))->count();
+        $total_visitors = Visitor::query()
+            ->adminFilter()
+            ->filterWithYear(session('year'))
+            ->count();
 
         return inertia('Visitor/Index', [
             'visitors' => $visitors,
+            'filters' => $filters,
             'total_visitors' => $total_visitors,
             'total_unassigned' => 0
         ]);

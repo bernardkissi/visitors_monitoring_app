@@ -77,6 +77,14 @@
             </div>
             <div class="mt-12" style="overflow-x:auto;">
                 <div class="flex items-center justify-end">
+                    <div class="select-wrapper">
+                        <select v-model="filters.form.status" class="block mr-5 py-3 text-gray-900 px-4 w-full rounded-l-lg border-r border-gray-200 text-sm focus:outline-none">
+                            <option class="text-gray-900" value="" selected>Filter By</option>
+                            <option value="pending">Pending</option>
+                            <option value="called">Called</option>
+                            <option value="visited">Visited</option>
+                        </select>
+                    </div>
                     <div class="hidden lg:block relative w-64">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                             <svg class="h-5 w-5 fill-current text-gray-500" viewBox="0 0 24 24">
@@ -84,8 +92,8 @@
                                     d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z" />
                             </svg>
                         </span>
-                        <input
-                            class="block shadow pl-8 pr-4 py-3 w-full bg-white rounded-lg text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
+                        <input v-model="filters.form.search"
+                            class="block pl-8 pr-4 py-3 w-full bg-white rounded-r-lg text-sm placeholder-gray-400 focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
                             placeholder="Search for visitors" />
                     </div>
                 </div>
@@ -139,7 +147,8 @@
                                 <p class="text-xs text-gray-400 font-medium">{{ visitor.email }}</p>
                             </td>
                             <td class="hidden lg:table-cell">
-                                <p v-if="visitor.user" class="text-sm text-gray-400 font-medium">{{visitor.user.name}}</p>
+                                <p v-if="visitor.user" class="text-sm text-gray-800 font-medium">{{visitor.user.name}}</p>
+                                <p v-if="visitor.user" class="text-xs text-gray-400 font-medium">{{ dayjs(visitor.created_at).format('DD/MM/YYYY')}}</p>
                                 <p v-else class="text-sm text-gray-400 font-medium">not assigned</p>
                             </td>
                             <td>
@@ -210,14 +219,26 @@
 <script setup>
 import Navbar from '@/Components/Navbar.vue'
 import Pagination from '@/Components/Pagination.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, reactive, watch } from 'vue'
 import { createToast } from 'mosha-vue-toastify'
 import 'mosha-vue-toastify/dist/style.css'
+import { Inertia } from '@inertiajs/inertia'
+import throttle from 'lodash/throttle'
+
+const dayjs = require('dayjs')
 
 const image = ref('https://ui-avatars.com/api/?background=f3e8ff&color=7e22ce&bold=true&name=')
+const filters =  reactive({form: {
+    search: props.filters.search,
+    status: props.filters.status ?? ''
+}})
 const props = defineProps({
     flash: Object,
     visitors: {
+        Object,
+        default: () => null
+    },
+    filters: {
         Object,
         default: () => null
     },
@@ -238,5 +259,11 @@ onMounted(() => {
         createToast(props.flash.success, { type: 'success', showIcon: true })
     }
 })
+
+watch(filters, throttle(function(value) {
+    Inertia.get('visitors', {search: value.form.search, status: value.form.status},
+    { preserveState: true, preserveScroll: true, replace: true }),
+    {deep: true}
+}, 600))
 
 </script>

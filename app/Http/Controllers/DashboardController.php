@@ -27,7 +27,7 @@ class DashboardController extends Controller
                         ->filterWithQuery($filters)
                         ->with('user')
                         ->take(20)
-                        ->latest()
+                        ->orderBy('created_at', 'desc')
                         ->paginate(8)
                         ->withQueryString();
 
